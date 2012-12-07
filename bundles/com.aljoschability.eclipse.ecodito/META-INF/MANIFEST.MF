@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Graphical Ecore Tooling
+Bundle-SymbolicName: com.aljoschability.eclipse.ecodito;singleton:=true
+Bundle-Version: 0.3.0.qualifier
+Bundle-Vendor: Aljoschability
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: com.aljoschability.eclipse.ecodito
+Require-Bundle: org.eclipse.emf.codegen.ecore,
+ org.eclipse.xtend.lib
+Bundle-ActivationPolicy: lazy

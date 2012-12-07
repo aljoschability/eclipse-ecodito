@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Graphical Ecore Tooling: Editor Properties
+Bundle-SymbolicName: com.aljoschability.eclipse.ecodito.ui.properties;singleton:=true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-Version: 0.3.0.qualifier
+Bundle-Activator: com.aljoschability.eclipse.grecoto.ui.properties.Activator
+Bundle-Vendor: Aljoschability
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.transaction,
+ org.eclipse.jdt,
+ org.eclipse.jdt.core,
+ org.eclipse.jdt.ui,
+ org.eclipse.jface.text,
+ org.eclipse.ocl.examples.xtext.console,
+ org.eclipse.ui,
+ org.eclipse.ui.views.properties.tabbed,
+ org.eclipse.xtend.lib,
+ com.aljoschability.eclipse.core.emf,
+ com.aljoschability.eclipse.core.graphiti,
+ com.aljoschability.eclipse.core.properties,
+ com.aljoschability.eclipse.core.runtime,
+ com.aljoschability.eclipse.core.ui,
+ com.aljoschability.eclipse.ecodito
+Bundle-ActivationPolicy: lazy

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.aljoschability.eclipse.grecoto.ui.editor.EcoreDiagramEditor"
+            contributorClass="org.eclipse.graphiti.ui.editor.DiagramEditorActionBarContributor"
+            default="true"
+            extensions="ecore_diagrams"
+            icon="icons/file_diagram.png"
+            id="com.aljoschability.eclipse.grecoto.ui.editor"
+            matchingStrategy="org.eclipse.graphiti.ui.editor.DiagramEditorMatchingStrategy"
+            name="Ecore Diagram Editor">
+      </editor>
+   </extension>
+
+</plugin>

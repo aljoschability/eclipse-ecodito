@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Graphical Ecore Tooling: Editor
+Bundle-SymbolicName: com.aljoschability.eclipse.ecodito.ui.editor;singleton:=true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-Version: 0.3.0.qualifier
+Bundle-Activator: com.aljoschability.eclipse.grecoto.ui.editor.Activator
+Bundle-Vendor: Aljoschability
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.transaction,
+ org.eclipse.gef,
+ org.eclipse.graphiti,
+ org.eclipse.graphiti.mm,
+ org.eclipse.graphiti.pattern,
+ org.eclipse.graphiti.ui,
+ org.eclipse.graphiti.ui.capabilities,
+ org.eclipse.ui,
+ org.eclipse.ui.ide,
+ org.eclipse.ui.views.properties.tabbed,
+ org.eclipse.xtend.lib,
+ com.aljoschability.eclipse.core.emf,
+ com.aljoschability.eclipse.core.graphiti,
+ com.aljoschability.eclipse.core.runtime,
+ com.aljoschability.eclipse.core.ui
+Bundle-ActivationPolicy: lazy

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.emf.codegen.ecore.ui.wizardCategory"
+            class="com.aljoschability.eclipse.ecodito.ui.wizards.NewGrecotoDiagramWizard"
+            hasPages="true"
+            icon="icons/file_diagram_new.png"
+            id="com.aljoschability.eclipse.grecoto.ui.wizards.NewDiagramWizard"
+            name="Ecore Diagram">
+         <description>
+            Create a new Ecore diagram
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.graphiti.ui.diagramTypes">
+      <diagramType
+            id="com.aljoschability.eclipse.grecoto.diagram"
+            name="Ecore Diagram"
+            type="com.aljoschability.eclipse.grecoto.diagram">
+      </diagramType>
+   </extension>
+   <extension
+         point="org.eclipse.graphiti.ui.imageProviders">
+      <imageProvider
+            class="com.aljoschability.eclipse.ecodito.ui.GrecotoImageProvider"
+            id="com.aljoschability.eclipse.grecoto.diagram.images">
+      </imageProvider>
+   </extension>
+   <extension
+         point="org.eclipse.graphiti.ui.diagramTypeProviders">
+      <diagramTypeProvider
+            class="com.aljoschability.eclipse.ecodito.ui.GrecotoDiagramTypeProvider"
+            id="com.aljoschability.eclipse.grecoto.ui.diagram.provider"
+            name="Ecore Diagram">
+         <diagramType
+               id="com.aljoschability.eclipse.grecoto.diagram">
+         </diagramType>
+         <imageProvider
+               id="com.aljoschability.eclipse.grecoto.diagram.images">
+         </imageProvider>
+      </diagramTypeProvider>
+   </extension>
+</plugin>
