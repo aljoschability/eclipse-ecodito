@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright 2013 Aljoschability and others. All rights reserved.
+
+	This program and the accompanying materials are made available under the
+	terms of the Eclipse Public License v1.0 which accompanies this distribution,
+	and is available at http://www.eclipse.org/legal/epl-v10.html
+
+	Contributors:
+		Aljoscha Hark <mail@aljoschability.com> - initial API and implementation
+-->
+<site>
+   <feature url="features/com.aljoschability.eclipse.ecodito.feature_0.1.0.qualifier.jar" id="com.aljoschability.eclipse.ecodito.feature" version="0.1.0.qualifier">
+      <category name="com.aljoschability.eclipse.ecodito"/>
+   </feature>
+   <category-def name="com.aljoschability.eclipse.ecodito" label="Eclipse Ecodito">
+    <description>This contains all Eclipse Ecodito features.</description>
+   </category-def>
+</site>
