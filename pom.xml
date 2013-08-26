@@ -18,7 +18,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.version>0.21.0</tycho.version>
-		<xtend.version>2.6.0</xtend.version>
+		<xtend.version>2.7.2</xtend.version>
 	</properties>
 	<modules>
 		<module>bundles/com.aljoschability.eclipse.ecodito</module>

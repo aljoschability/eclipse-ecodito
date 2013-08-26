@@ -32,8 +32,8 @@
 							<goal>testCompile</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/src/main/generated-xtend</outputDirectory>
-							<testOutputDirectory>${project.build.directory}/src/test/generated-xtend</testOutputDirectory>
+							<outputDirectory>${basedir}/src/main/generated-xtend</outputDirectory>
+							<testOutputDirectory>${basedir}/src/test/generated-xtend</testOutputDirectory>
 						</configuration>
 					</execution>
 				</executions>
