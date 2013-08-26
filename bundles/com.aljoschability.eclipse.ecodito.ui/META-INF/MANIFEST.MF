@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Ui
 Bundle-SymbolicName: com.aljoschability.eclipse.ecodito.ui;singleton:=true
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Bundle-Version: 0.3.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: com.aljoschability.eclipse.ecodito.ui.Activator
 Bundle-Vendor: Aljoschability
 Require-Bundle: org.eclipse.core.runtime,
