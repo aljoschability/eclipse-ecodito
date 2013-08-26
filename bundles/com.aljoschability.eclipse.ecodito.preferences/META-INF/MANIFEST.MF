@@ -6,4 +6,5 @@ Bundle-Version: 0.3.0.qualifier
 Bundle-Vendor: Aljoschability
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.ui,
- org.eclipse.xtend.lib
+ org.eclipse.xtext.xbase.lib
+Bundle-ActivationPolicy: lazy
