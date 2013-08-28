@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Graphical Ecore Tooling: Editor
+Bundle-Name: %bundle.name
 Bundle-SymbolicName: com.aljoschability.eclipse.ecodito.ui.editor;singleton:=true
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: com.aljoschability.eclipse.grecoto.ui.editor.Activator
-Bundle-Vendor: Aljoschability
+Bundle-Vendor: %bundle.vendor
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.transaction,
  org.eclipse.gef,

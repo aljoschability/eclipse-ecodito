@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Preferences
+Bundle-Name: %bundle.name
 Bundle-SymbolicName: com.aljoschability.eclipse.ecodito.preferences;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Vendor: Aljoschability
+Bundle-Vendor: %bundle.vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.xbase.lib
