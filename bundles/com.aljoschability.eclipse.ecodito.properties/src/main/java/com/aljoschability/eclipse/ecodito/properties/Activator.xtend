@@ -1,4 +1,4 @@
-package com.aljoschability.eclipse.grecoto.ui.properties;
+package com.aljoschability.eclipse.ecodito.properties;
 
 import org.eclipse.ocl.examples.xtext.console.XtextConsolePlugin;
 import org.eclipse.ocl.examples.xtext.essentialocl.utilities.EssentialOCLPlugin;
@@ -13,11 +13,11 @@ final class Activator extends AbstractActivator {
 		Activator::INSTANCE
 	}
 
-	override void dispose() {
+	override protected dispose() {
 		Activator::INSTANCE = null
 	}
 
-	override void initialize() {
+	override protected initialize() {
 		Activator::INSTANCE = this
 
 		// prepare injector for OCL editor

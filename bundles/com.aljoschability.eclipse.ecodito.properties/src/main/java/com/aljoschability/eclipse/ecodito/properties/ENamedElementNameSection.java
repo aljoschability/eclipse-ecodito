@@ -1,4 +1,4 @@
-package com.aljoschability.eclipse.grecoto.ui.properties;
+package com.aljoschability.eclipse.ecodito.properties;
 
 import java.util.regex.Pattern;
 

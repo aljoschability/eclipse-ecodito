@@ -64,7 +64,7 @@
       <propertySections
             contributorId="com.aljoschability.eclipse.grecoto.diagram.PropertyContributor">
          <propertySection
-               class="com.aljoschability.eclipse.grecoto.ui.properties.ENamedElementNameSection"
+               class="com.aljoschability.eclipse.ecodito.properties.ENamedElementNameSection"
                enablesFor="1"
                id="EPackage.name"
                tab="model">
@@ -74,7 +74,7 @@
          </propertySection>
          <propertySection
                afterSection="EPackage.name"
-               class="com.aljoschability.eclipse.grecoto.ui.properties.EPackageNsPrefixSection"
+               class="com.aljoschability.eclipse.ecodito.properties.EPackageNsPrefixSection"
                enablesFor="1"
                id="EPackage.nsPrefix"
                tab="model">
@@ -84,7 +84,7 @@
          </propertySection>
          <propertySection
                afterSection="EPackage.nsPrefix"
-               class="com.aljoschability.eclipse.grecoto.ui.properties.EPackageNsUriSection"
+               class="com.aljoschability.eclipse.ecodito.properties.EPackageNsUriSection"
                enablesFor="1"
                id="EPackage.nsUri"
                tab="model">
@@ -93,7 +93,7 @@
             </input>
          </propertySection>
          <propertySection
-               class="com.aljoschability.eclipse.grecoto.ui.properties.EModelElementDocumentationSection"
+               class="com.aljoschability.eclipse.ecodito.properties.EModelElementDocumentationSection"
                enablesFor="1"
                id="EPackage.documentation"
                tab="documentation">
@@ -109,7 +109,7 @@
       <propertySections
             contributorId="com.aljoschability.eclipse.grecoto.diagram.PropertyContributor">
          <propertySection
-               class="com.aljoschability.eclipse.grecoto.ui.properties.ENamedElementNameSection"
+               class="com.aljoschability.eclipse.ecodito.properties.ENamedElementNameSection"
                enablesFor="1"
                id="EClass.name"
                tab="model">
@@ -119,7 +119,7 @@
          </propertySection>
          <propertySection
                afterSection="EClass.name"
-               class="com.aljoschability.eclipse.grecoto.ui.properties.EClassifierInstanceClassNameSection"
+               class="com.aljoschability.eclipse.ecodito.properties.EClassifierInstanceClassNameSection"
                enablesFor="1"
                id="EClass.instanceClassName"
                tab="model">
@@ -129,7 +129,7 @@
          </propertySection>
          <propertySection
                afterSection="EClass.instanceClassName"
-               class="com.aljoschability.eclipse.grecoto.ui.properties.EClassModifierSection"
+               class="com.aljoschability.eclipse.ecodito.properties.EClassModifierSection"
                enablesFor="1"
                id="EClass.modifier"
                tab="model">
@@ -138,7 +138,7 @@
             </input>
          </propertySection>
          <propertySection
-               class="com.aljoschability.eclipse.grecoto.ui.properties.EModelElementDocumentationSection"
+               class="com.aljoschability.eclipse.ecodito.properties.EModelElementDocumentationSection"
                enablesFor="1"
                id="EClass.documentation"
                tab="documentation">
@@ -147,7 +147,7 @@
             </input>
          </propertySection>
          <propertySection
-               class="com.aljoschability.eclipse.grecoto.ui.properties.EClassConstraintsSection"
+               class="com.aljoschability.eclipse.ecodito.properties.EClassConstraintsSection"
                enablesFor="1"
                id="EClass.constraints"
                tab="constraints">
@@ -163,7 +163,7 @@
       <propertySections
             contributorId="com.aljoschability.eclipse.grecoto.diagram.PropertyContributor">
          <propertySection
-               class="com.aljoschability.eclipse.grecoto.ui.properties.ENamedElementNameSection"
+               class="com.aljoschability.eclipse.ecodito.properties.ENamedElementNameSection"
                enablesFor="1"
                id="EAttribute.name"
                tab="model">
@@ -173,7 +173,7 @@
          </propertySection>
          <propertySection
                afterSection="EAttribute.name"
-               class="com.aljoschability.eclipse.grecoto.ui.properties.ETypedElementETypeSection"
+               class="com.aljoschability.eclipse.ecodito.properties.ETypedElementETypeSection"
                enablesFor="1"
                id="EAttribute.type"
                tab="model">
@@ -182,7 +182,7 @@
             </input>
          </propertySection>
          <propertySection
-               class="com.aljoschability.eclipse.grecoto.ui.properties.EModelElementDocumentationSection"
+               class="com.aljoschability.eclipse.ecodito.properties.EModelElementDocumentationSection"
                enablesFor="1"
                id="EAttribute.documentation"
                tab="documentation">

@@ -1,4 +1,4 @@
-package com.aljoschability.eclipse.grecoto.ui.properties;
+package com.aljoschability.eclipse.ecodito.properties;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
