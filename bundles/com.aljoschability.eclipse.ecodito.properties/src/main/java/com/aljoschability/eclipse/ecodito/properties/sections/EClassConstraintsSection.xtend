@@ -2,7 +2,6 @@ package com.aljoschability.eclipse.ecodito.properties.sections;
 
 import com.aljoschability.core.ui.CoreImages
 import com.aljoschability.eclipse.core.properties.graphiti.GraphitiElementAdapter
-import com.aljoschability.eclipse.core.ui.properties.sections.AbstractPropertySection
 import java.util.Collections
 import java.util.LinkedHashMap
 import java.util.Map
@@ -41,8 +40,8 @@ import org.eclipse.ui.IWorkbenchPart
 import org.eclipse.ui.PlatformUI
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory
 
-import static com.aljoschability.eclipse.core.ui.properties.sections.AbstractPropertySection.*
 import static com.aljoschability.eclipse.ecodito.properties.sections.EClassConstraintsSection.*
+import com.aljoschability.eclipse.core.properties.sections.AbstractPropertySection
 
 class EClassConstraintsSection extends AbstractPropertySection {
 	private static final String SOURCE_OCL = "http://www.eclipse.org/emf/2002/Ecore/OCL";

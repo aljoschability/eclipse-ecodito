@@ -1,7 +1,7 @@
 package com.aljoschability.eclipse.ecodito.properties.sections;
 
 import com.aljoschability.eclipse.core.properties.graphiti.GraphitiElementAdapter
-import com.aljoschability.eclipse.core.ui.properties.sections.AbstractComboSection
+import com.aljoschability.eclipse.core.properties.sections.AbstractComboSection
 import java.util.Collections
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EcorePackage

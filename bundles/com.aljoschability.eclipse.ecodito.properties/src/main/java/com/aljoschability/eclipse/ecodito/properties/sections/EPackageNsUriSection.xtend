@@ -1,7 +1,7 @@
 package com.aljoschability.eclipse.ecodito.properties.sections;
 
 import com.aljoschability.eclipse.core.properties.graphiti.GraphitiElementAdapter
-import com.aljoschability.eclipse.core.ui.properties.sections.AbstractTextSection
+import com.aljoschability.eclipse.core.properties.sections.AbstractTextSection
 import org.eclipse.emf.ecore.EcorePackage
 
 class EPackageNsUriSection extends AbstractTextSection {
