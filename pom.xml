@@ -22,7 +22,6 @@
 	</properties>
 	<modules>
 		<module>bundles/com.aljoschability.eclipse.ecodito</module>
-		<module>bundles/com.aljoschability.eclipse.ecodito.preferences</module>
 		<module>bundles/com.aljoschability.eclipse.ecodito.ui</module>
 		<module>bundles/com.aljoschability.eclipse.ecodito.ui.editor</module>
 		<module>bundles/com.aljoschability.eclipse.ecodito.ui.properties</module>
