@@ -1,8 +1,8 @@
 package com.aljoschability.eclipse.ecodito.properties.sections;
 
+import com.aljoschability.eclipse.core.properties.State
 import com.aljoschability.eclipse.core.properties.graphiti.GraphitiElementAdapter
 import com.aljoschability.eclipse.core.properties.sections.AbstractTextSection
-import com.aljoschability.eclipse.core.ui.properties.State
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.CoreException
 import org.eclipse.emf.ecore.EcorePackage
