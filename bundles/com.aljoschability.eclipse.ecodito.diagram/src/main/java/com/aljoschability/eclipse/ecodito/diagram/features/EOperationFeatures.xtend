@@ -1,15 +1,45 @@
 package com.aljoschability.eclipse.ecodito.diagram.features;
 
+import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
 import com.aljoschability.eclipse.core.graphiti.pattern.CorePattern
+import com.aljoschability.eclipse.ecodito.diagram.util.EOperationExtensions
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EOperation
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.emf.ecore.EcorePackage
+import org.eclipse.graphiti.features.IFeatureProvider
 import org.eclipse.graphiti.features.context.IAddContext
 import org.eclipse.graphiti.features.context.ICreateContext
 import org.eclipse.graphiti.pattern.config.IPatternConfiguration
 import org.eclipse.graphiti.services.Graphiti
 import org.eclipse.graphiti.util.IColorConstant
+
+class EOperationCreateFeature extends CoreCreateFeature {
+	extension EOperationExtensions = EOperationExtensions::INSTANCE
+
+	new(IFeatureProvider fp) {
+		super(fp)
+
+		name = "Operation"
+		description = "Create Operation"
+		imageId = EcorePackage.Literals::EOPERATION.name
+		largeImageId = EcorePackage.Literals::EOPERATION.name
+
+		editable = true
+	}
+
+	override canCreate(ICreateContext context) {
+		return context.EClass != null
+	}
+
+	override createElement(ICreateContext context) {
+		val element = EcoreFactory::eINSTANCE.createEOperation
+
+		context.EClass.EOperations += element
+
+		return element
+	}
+}
 
 public class EOperationPattern extends CorePattern {
 	new(IPatternConfiguration patternConfiguration) {

@@ -1,15 +1,45 @@
 package com.aljoschability.eclipse.ecodito.diagram.features;
 
+import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
 import com.aljoschability.eclipse.core.graphiti.pattern.CorePattern
+import com.aljoschability.eclipse.ecodito.diagram.util.EAttributeExtensions
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.emf.ecore.EcorePackage
+import org.eclipse.graphiti.features.IFeatureProvider
 import org.eclipse.graphiti.features.context.IAddContext
 import org.eclipse.graphiti.features.context.ICreateContext
 import org.eclipse.graphiti.pattern.config.IPatternConfiguration
 import org.eclipse.graphiti.services.Graphiti
 import org.eclipse.graphiti.util.IColorConstant
+
+class EAttributeCreateFeature extends CoreCreateFeature {
+	extension EAttributeExtensions = EAttributeExtensions::INSTANCE
+
+	new(IFeatureProvider fp) {
+		super(fp)
+
+		name = "Attribute"
+		description = "Create Attribute"
+		imageId = EcorePackage.Literals::EATTRIBUTE.name
+		largeImageId = EcorePackage.Literals::EATTRIBUTE.name
+
+		editable = true
+	}
+
+	override canCreate(ICreateContext context) {
+		return context.EClass != null
+	}
+
+	override createElement(ICreateContext context) {
+		val element = EcoreFactory::eINSTANCE.createEAttribute
+
+		context.EClass.EStructuralFeatures += element
+
+		return element
+	}
+}
 
 class EAttributePattern extends CorePattern {
 	new(IPatternConfiguration patternConfiguration) {
