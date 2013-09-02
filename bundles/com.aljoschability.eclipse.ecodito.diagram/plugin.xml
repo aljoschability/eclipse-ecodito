@@ -13,7 +13,7 @@
    <extension
          point="org.eclipse.ui.editors">
       <editor
-            class="com.aljoschability.eclipse.grecoto.ui.editor.EcoreDiagramEditor"
+            class="com.aljoschability.eclipse.ecodito.diagram.editor.EcoreDiagramEditor"
             contributorClass="org.eclipse.graphiti.ui.editor.DiagramEditorActionBarContributor"
             default="true"
             extensions="ecore_diagrams"
@@ -23,5 +23,28 @@
             name="Ecore Diagram Editor">
       </editor>
    </extension>
+
+	<extension point="org.eclipse.graphiti.ui.diagramTypes">
+		<diagramType
+			id="com.aljoschability.eclipse.ecodito.diagram"
+			name="Ecore Diagram"
+			type="com.aljoschability.eclipse.ecodito.diagram"/>
+	</extension>
+
+	<extension point="org.eclipse.graphiti.ui.imageProviders">
+		<imageProvider
+			class="com.aljoschability.eclipse.ecodito.diagram.EcoditoImageProvider"
+			id="com.aljoschability.eclipse.ecodito.diagram"/>
+	</extension>
+
+	<extension point="org.eclipse.graphiti.ui.diagramTypeProviders">
+		<diagramTypeProvider
+			class="com.aljoschability.eclipse.ecodito.diagram.EcoditoDiagramTypeProvider"
+			id="com.aljoschability.eclipse.ecodito.diagram"
+			name="Ecore Diagram">
+			<diagramType id="com.aljoschability.eclipse.ecodito.diagram"/>
+			<imageProvider id="com.aljoschability.eclipse.ecodito.diagram"/>
+		</diagramTypeProvider>
+	</extension>
 
 </plugin>

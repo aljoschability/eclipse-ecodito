@@ -4,7 +4,7 @@ Bundle-Name: %bundle.name
 Bundle-SymbolicName: com.aljoschability.eclipse.ecodito.diagram;singleton:=true
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: com.aljoschability.eclipse.grecoto.ui.editor.Activator
+Bundle-Activator: com.aljoschability.eclipse.ecodito.diagram.Activator
 Bundle-Vendor: %bundle.vendor
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.transaction,

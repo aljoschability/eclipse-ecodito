@@ -1,10 +1,10 @@
-package com.aljoschability.eclipse.grecoto.ui.editor;
+package com.aljoschability.eclipse.ecodito.diagram
 
-import com.aljoschability.core.ui.runtime.AbstractActivator;
-import com.aljoschability.core.ui.runtime.IActivator;
+import com.aljoschability.core.ui.runtime.AbstractActivator
+import com.aljoschability.core.ui.runtime.IActivator
 
 final class Activator extends AbstractActivator {
-	var static IActivator INSTANCE
+	static IActivator INSTANCE
 
 	def static IActivator get() {
 		Activator::INSTANCE

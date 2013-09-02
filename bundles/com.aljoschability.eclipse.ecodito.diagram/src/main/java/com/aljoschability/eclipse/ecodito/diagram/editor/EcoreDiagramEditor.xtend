@@ -1,4 +1,4 @@
-package com.aljoschability.eclipse.grecoto.ui.editor;
+package com.aljoschability.eclipse.ecodito.diagram.editor;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;

@@ -25,33 +25,4 @@
          </description>
       </wizard>
    </extension>
-   <extension
-         point="org.eclipse.graphiti.ui.diagramTypes">
-      <diagramType
-            id="com.aljoschability.eclipse.grecoto.diagram"
-            name="Ecore Diagram"
-            type="com.aljoschability.eclipse.grecoto.diagram">
-      </diagramType>
-   </extension>
-   <extension
-         point="org.eclipse.graphiti.ui.imageProviders">
-      <imageProvider
-            class="com.aljoschability.eclipse.ecodito.ui.GrecotoImageProvider"
-            id="com.aljoschability.eclipse.grecoto.diagram.images">
-      </imageProvider>
-   </extension>
-   <extension
-         point="org.eclipse.graphiti.ui.diagramTypeProviders">
-      <diagramTypeProvider
-            class="com.aljoschability.eclipse.ecodito.ui.GrecotoDiagramTypeProvider"
-            id="com.aljoschability.eclipse.grecoto.ui.diagram.provider"
-            name="Ecore Diagram">
-         <diagramType
-               id="com.aljoschability.eclipse.grecoto.diagram">
-         </diagramType>
-         <imageProvider
-               id="com.aljoschability.eclipse.grecoto.diagram.images">
-         </imageProvider>
-      </diagramTypeProvider>
-   </extension>
 </plugin>
