@@ -71,8 +71,8 @@ class EDataTypeCreateFeature extends CoreCreateFeature {
 
 		name = "Data Type"
 		description = "Create Data Type"
-		imageId = EcorePackage.Literals::EDATA_TYPE.name
-		largeImageId = EcorePackage.Literals::EDATA_TYPE.name
+		imageId = icon
+		largeImageId = icon
 
 		editable = true
 	}

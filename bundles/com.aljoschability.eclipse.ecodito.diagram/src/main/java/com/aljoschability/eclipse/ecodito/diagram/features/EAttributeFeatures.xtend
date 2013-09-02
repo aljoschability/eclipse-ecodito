@@ -22,8 +22,8 @@ class EAttributeCreateFeature extends CoreCreateFeature {
 
 		name = "Attribute"
 		description = "Create Attribute"
-		imageId = EcorePackage.Literals::EATTRIBUTE.name
-		largeImageId = EcorePackage.Literals::EATTRIBUTE.name
+		imageId = icon
+		largeImageId = icon
 
 		editable = true
 	}

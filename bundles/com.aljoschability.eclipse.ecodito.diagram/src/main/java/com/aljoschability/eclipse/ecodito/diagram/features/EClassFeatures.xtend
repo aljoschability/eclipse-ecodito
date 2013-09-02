@@ -74,8 +74,8 @@ class EClassCreateFeature extends CoreCreateFeature {
 
 		name = "Class"
 		description = "Create Class"
-		imageId = EcorePackage.Literals::ECLASS.name
-		largeImageId = EcorePackage.Literals::ECLASS.name
+		imageId = icon
+		largeImageId = icon
 
 		editable = true
 	}

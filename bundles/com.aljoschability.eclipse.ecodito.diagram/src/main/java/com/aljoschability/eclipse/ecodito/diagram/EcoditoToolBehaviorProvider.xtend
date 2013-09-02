@@ -45,7 +45,7 @@ class EcoditoToolBehaviorProvider extends CoreToolBehaviorProvider {
 	}
 
 	def private IPaletteCompartmentEntry createEEnumEntries() {
-		val entry = new PaletteCompartmentEntry("Enumeration", EcorePackage.Literals::ECLASS.name)
+		val entry = new PaletteCompartmentEntry("Enumeration", EcorePackage.Literals::EENUM.name)
 
 		entry.toolEntries += new EEnumCreateFeature(featureProvider).creationTool
 
@@ -56,7 +56,7 @@ class EcoditoToolBehaviorProvider extends CoreToolBehaviorProvider {
 	}
 
 	def private IPaletteCompartmentEntry createEDataTypeEntries() {
-		val entry = new PaletteCompartmentEntry("Data Type", EcorePackage.Literals::ECLASS.name)
+		val entry = new PaletteCompartmentEntry("Data Type", EcorePackage.Literals::EDATA_TYPE.name)
 
 		entry.toolEntries += new EDataTypeCreateFeature(featureProvider).creationTool
 

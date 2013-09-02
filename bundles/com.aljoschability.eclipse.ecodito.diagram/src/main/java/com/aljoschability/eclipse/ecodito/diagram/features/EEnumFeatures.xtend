@@ -17,13 +17,15 @@ import org.eclipse.graphiti.features.impl.Reason
 import org.eclipse.graphiti.util.IColorConstant
 
 class EEnumCreateFeature extends CoreCreateFeature {
+	extension EEnumExtensions = EEnumExtensions::INSTANCE
+
 	new(IFeatureProvider fp) {
 		super(fp)
 
-		name = "EEnum"
-		description = "Create EEnum"
-		imageId = EEnum.simpleName
-		largeImageId = EEnum.simpleName
+		name = "Enumeration"
+		description = "Create Enumeration"
+		imageId = icon
+		largeImageId = icon
 
 		editable = true
 	}

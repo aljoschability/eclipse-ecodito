@@ -22,8 +22,8 @@ class EEnumLiteralCreateFeature extends CoreCreateFeature {
 
 		name = "Literal"
 		description = "Create Literal"
-		imageId = EcorePackage.Literals::EENUM_LITERAL.name
-		largeImageId = EcorePackage.Literals::EENUM_LITERAL.name
+		imageId = icon
+		largeImageId = icon
 
 		editable = true
 	}

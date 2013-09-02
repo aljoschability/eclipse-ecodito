@@ -22,8 +22,8 @@ class EOperationCreateFeature extends CoreCreateFeature {
 
 		name = "Operation"
 		description = "Create Operation"
-		imageId = EcorePackage.Literals::EOPERATION.name
-		largeImageId = EcorePackage.Literals::EOPERATION.name
+		imageId = icon
+		largeImageId = icon
 
 		editable = true
 	}
