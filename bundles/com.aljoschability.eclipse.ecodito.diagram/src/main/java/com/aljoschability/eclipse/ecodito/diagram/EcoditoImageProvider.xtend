@@ -1,4 +1,4 @@
-package com.aljoschability.eclipse.ecodito.diagram;
+package com.aljoschability.eclipse.ecodito.diagram
 
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EcorePackage
