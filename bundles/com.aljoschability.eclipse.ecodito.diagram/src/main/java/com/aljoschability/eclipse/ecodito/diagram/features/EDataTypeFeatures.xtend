@@ -1,49 +1,23 @@
 package com.aljoschability.eclipse.ecodito.diagram.features;
 
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
-import com.aljoschability.eclipse.core.graphiti.pattern.CorePattern
+import com.aljoschability.eclipse.ecodito.diagram.util.EDataTypeExtensions
 import org.eclipse.emf.ecore.EDataType
-import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.graphiti.features.IFeatureProvider
 import org.eclipse.graphiti.features.context.IAddContext
 import org.eclipse.graphiti.features.context.ICreateContext
+import org.eclipse.graphiti.features.context.ILayoutContext
+import org.eclipse.graphiti.features.context.IUpdateContext
 import org.eclipse.graphiti.features.impl.AbstractAddFeature
-import org.eclipse.graphiti.pattern.config.IPatternConfiguration
-import org.eclipse.emf.ecore.EEnum
-import com.aljoschability.eclipse.core.graphiti.util.GraphitiExtensions
+import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
+import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
+import org.eclipse.graphiti.features.impl.Reason
 import org.eclipse.graphiti.util.IColorConstant
-import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm
-
-class EDataTypeCreateFeature extends CoreCreateFeature {
-	new(IFeatureProvider fp) {
-		super(fp)
-
-		name = "EDataType"
-		description = "Create EDataType"
-		imageId = EDataType.simpleName
-		largeImageId = EDataType.simpleName
-
-		editable = true
-	}
-
-	override canCreate(ICreateContext context) {
-		return context.targetContainer.businessObjectForPictogramElement instanceof EPackage
-	}
-
-	override createElement(ICreateContext context) {
-		val p = context.targetContainer.businessObjectForPictogramElement as EPackage
-
-		val element = EcoreFactory::eINSTANCE.createEDataType
-		p.EClassifiers += element
-
-		return element
-	}
-}
 
 class EDataTypeAddFeature extends AbstractAddFeature {
-	extension GraphitiExtensions = GraphitiExtensions::INSTANCE
+	extension EDataTypeExtensions = EDataTypeExtensions::INSTANCE
 
 	new(IFeatureProvider fp) {
 		super(fp)
@@ -85,34 +59,69 @@ class EDataTypeAddFeature extends AbstractAddFeature {
 	}
 
 	override canAdd(IAddContext context) {
-		context.newObject instanceof EDataType && !(context.newObject instanceof EEnum) &&
-			context.targetContainer.bo instanceof EPackage
-	}
-
-	def void setBackground(GraphicsAlgorithm ga, IColorConstant color) {
-		ga.background = manageColor(color)
-	}
-
-	def void setForeground(GraphicsAlgorithm ga, IColorConstant color) {
-		ga.foreground = manageColor(color)
+		context.EPackage != null && context.EDataType != null
 	}
 }
 
-class EDataTypePattern extends CorePattern {
-	new(IPatternConfiguration patternConfiguration) {
-		super();
+class EDataTypeCreateFeature extends CoreCreateFeature {
+	extension EDataTypeExtensions = EDataTypeExtensions::INSTANCE
+
+	new(IFeatureProvider fp) {
+		super(fp)
+
+		name = "Data Type"
+		description = "Create Data Type"
+		imageId = EcorePackage.Literals::EDATA_TYPE.name
+		largeImageId = EcorePackage.Literals::EDATA_TYPE.name
+
+		editable = true
 	}
 
 	override canCreate(ICreateContext context) {
-		val pe = context.getTargetContainer();
-		return getBO(pe) instanceof EPackage;
+		return context.EPackage != null
 	}
 
-	override protected isBO(Object bo) {
-		return bo instanceof EDataType;
+	override createElement(ICreateContext context) {
+		val element = EcoreFactory::eINSTANCE.createEDataType
+
+		context.EPackage.EClassifiers += element
+
+		return element
+	}
+}
+
+class EDataTypeLayoutFeature extends AbstractLayoutFeature {
+	extension EDataTypeExtensions = EDataTypeExtensions::INSTANCE
+
+	new(IFeatureProvider fp) {
+		super(fp)
 	}
 
-	override protected getEClass() {
-		return EcorePackage.Literals.EDATA_TYPE;
+	override canLayout(ILayoutContext context) {
+		context.EDataType != null
+	}
+
+	override layout(ILayoutContext context) {
+		false
+	}
+}
+
+class EDataTypeUpdateFeature extends AbstractUpdateFeature {
+	extension EDataTypeExtensions = EDataTypeExtensions::INSTANCE
+
+	new(IFeatureProvider fp) {
+		super(fp)
+	}
+
+	override canUpdate(IUpdateContext context) {
+		context.EDataType != null
+	}
+
+	override updateNeeded(IUpdateContext context) {
+		Reason::createFalseReason
+	}
+
+	override update(IUpdateContext context) {
+		false
 	}
 }
