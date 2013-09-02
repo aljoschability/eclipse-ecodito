@@ -8,7 +8,9 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.graphiti.features.IFeatureProvider
+import org.eclipse.graphiti.features.context.IAddContext
 import org.eclipse.graphiti.features.context.ICreateContext
+import org.eclipse.graphiti.features.impl.AbstractAddFeature
 import org.eclipse.graphiti.pattern.config.IPatternConfiguration
 
 class EEnumCreateFeature extends CoreCreateFeature {
@@ -34,6 +36,20 @@ class EEnumCreateFeature extends CoreCreateFeature {
 		p.EClassifiers += element
 
 		return element
+	}
+}
+
+class EEnumAddFeature extends AbstractAddFeature {
+	new(IFeatureProvider fp) {
+		super(fp)
+	}
+
+	override add(IAddContext context) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+
+	override canAdd(IAddContext context) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 }
 

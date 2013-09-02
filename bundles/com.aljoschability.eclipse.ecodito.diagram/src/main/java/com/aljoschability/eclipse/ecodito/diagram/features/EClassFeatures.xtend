@@ -13,6 +13,7 @@ import org.eclipse.graphiti.services.Graphiti
 import org.eclipse.graphiti.util.IColorConstant
 import org.eclipse.graphiti.features.IFeatureProvider
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
+import org.eclipse.graphiti.features.impl.AbstractAddFeature
 
 class EClassCreateFeature extends CoreCreateFeature {
 	new(IFeatureProvider fp) {
@@ -40,9 +41,9 @@ class EClassCreateFeature extends CoreCreateFeature {
 	}
 }
 
-class EClassPattern extends CorePattern {
-	new(IPatternConfiguration patternConfiguration) {
-		super();
+class EClassAddFeature extends AbstractAddFeature {
+	new(IFeatureProvider fp) {
+		super(fp)
 	}
 
 	override add(IAddContext context) {
@@ -91,25 +92,23 @@ class EClassPattern extends CorePattern {
 		return pe;
 	}
 
+	override canAdd(IAddContext context) {
+		context.newObject instanceof EClass &&
+			context.targetContainer.businessObjectForPictogramElement instanceof EPackage
+	}
+}
+
+class EClassPattern extends CorePattern {
+	new(IPatternConfiguration patternConfiguration) {
+		super();
+	}
+
 	override updateNeeded(IUpdateContext context) {
 		val pe = context.getPictogramElement();
 		val bo = getBO(pe);
 
 		// check name text
 		return super.updateNeeded(context);
-	}
-
-	override protected createElement(ICreateContext context) {
-		val ePackage = getBO(context.getTargetContainer()) as EPackage;
-
-		val element = EcoreFactory.eINSTANCE.createEClass();
-		ePackage.getEClassifiers().add(element);
-
-		return element;
-	}
-
-	override canCreate(ICreateContext context) {
-		return getBO(context.getTargetContainer()) instanceof EPackage;
 	}
 
 	override protected isBO(Object bo) {

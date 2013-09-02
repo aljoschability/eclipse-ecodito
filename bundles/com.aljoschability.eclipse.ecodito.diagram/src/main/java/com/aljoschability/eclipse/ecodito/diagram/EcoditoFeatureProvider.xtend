@@ -1,26 +1,25 @@
-package com.aljoschability.eclipse.ecodito.diagram;
+package com.aljoschability.eclipse.ecodito.diagram
 
-import com.aljoschability.eclipse.ecodito.diagram.features.EAttributePattern
-import com.aljoschability.eclipse.ecodito.diagram.features.EClassPattern
-import com.aljoschability.eclipse.ecodito.diagram.features.EDataTypePattern
-import com.aljoschability.eclipse.ecodito.diagram.features.EEnumPattern
-import com.aljoschability.eclipse.ecodito.diagram.features.EOperationPattern
+import com.aljoschability.eclipse.ecodito.diagram.features.EClassAddFeature
+import com.aljoschability.eclipse.ecodito.diagram.features.EDataTypeAddFeature
+import com.aljoschability.eclipse.ecodito.diagram.features.EEnumAddFeature
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EDataType
+import org.eclipse.emf.ecore.EEnum
 import org.eclipse.graphiti.dt.IDiagramTypeProvider
-import org.eclipse.graphiti.pattern.DefaultFeatureProviderWithPatterns
+import org.eclipse.graphiti.features.context.IAddContext
+import org.eclipse.graphiti.ui.features.DefaultFeatureProvider
 
-class EcoditoFeatureProvider extends DefaultFeatureProviderWithPatterns {
+class EcoditoFeatureProvider extends DefaultFeatureProvider {
 	new(IDiagramTypeProvider dtp) {
-		super(dtp);
+		super(dtp)
+	}
 
-		addPattern(new EClassPattern(null));
-
-		addPattern(new EAttributePattern(null));
-		addPattern(new EOperationPattern(null));
-
-		addPattern(new EDataTypePattern(null));
-
-		addPattern(new EEnumPattern(null));
-
-	// addPattern(new EEnumLiteralPattern(null));
+	override getAddFeature(IAddContext context) {
+		switch context.newObject {
+			EClass: new EClassAddFeature(this)
+			EEnum: new EEnumAddFeature(this)
+			EDataType: new EDataTypeAddFeature(this)
+		}
 	}
 }

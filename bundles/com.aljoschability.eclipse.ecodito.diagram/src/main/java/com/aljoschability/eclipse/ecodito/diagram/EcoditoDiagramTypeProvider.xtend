@@ -1,22 +1,13 @@
 package com.aljoschability.eclipse.ecodito.diagram;
 
-import org.eclipse.graphiti.dt.AbstractDiagramTypeProvider
-import org.eclipse.graphiti.tb.IToolBehaviorProvider
+import com.aljoschability.eclipse.core.graphiti.editors.CoreDiagramTypeProvider
 
-class EcoditoDiagramTypeProvider extends AbstractDiagramTypeProvider {
-	EcoditoFeatureProvider featureProvider;
-	IToolBehaviorProvider[] toolBehaviourProviders;
-
+class EcoditoDiagramTypeProvider extends CoreDiagramTypeProvider {
 	new() {
-		featureProvider = new EcoditoFeatureProvider(this);
-		toolBehaviourProviders = #[new EcoditoToolBehaviorProvider(this)]
+		featureProvider = new EcoditoFeatureProvider(this)
 	}
 
-	override getFeatureProvider() {
-		return featureProvider;
-	}
-
-	override getAvailableToolBehaviorProviders() {
-		return toolBehaviourProviders;
+	override protected createToolBehaviorProvider() {
+		new EcoditoToolBehaviorProvider(this)
 	}
 }
