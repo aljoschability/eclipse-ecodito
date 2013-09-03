@@ -19,17 +19,12 @@ class EReferenceCreateFeature extends CoreCreateConnectionFeature {
 		editable = true
 	}
 
-	override canCreate(ICreateConnectionContext context) {
-
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	override canStartConnection(ICreateConnectionContext context) {
+		context.sourceEClass != null
 	}
 
-	override canStartConnection(ICreateConnectionContext context) {
-
-		//context.sourcePictogramElement.businessObjectForPictogramElement
-		//context.sourceEClass
-		//context.targetEClass
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	override canCreate(ICreateConnectionContext context) {
+		context.sourceEClass != null && context.targetEClass != null
 	}
 
 	override create(ICreateConnectionContext context) {
