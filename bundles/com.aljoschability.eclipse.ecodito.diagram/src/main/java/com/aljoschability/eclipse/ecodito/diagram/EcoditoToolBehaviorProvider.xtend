@@ -22,43 +22,37 @@ class EcoditoToolBehaviorProvider extends CoreToolBehaviorProvider {
 	override getPalette() {
 		val entries = newArrayList
 
-		entries += createEClassEntries
-		entries += createEEnumEntries
-		entries += createEDataTypeEntries
+		entries += createClassEntries
+		entries += createTypesEntries
 
 		return entries
 	}
 
-	def private IPaletteCompartmentEntry createEClassEntries() {
-		val entry = new PaletteCompartmentEntry("Class", EcorePackage.Literals::ECLASS.name)
+	def private IPaletteCompartmentEntry createClassEntries() {
+		val entry = new PaletteCompartmentEntry("Classes", EcorePackage.Literals::ECLASS.name)
 
 		entry.toolEntries += new EClassCreateFeature(featureProvider).creationTool
 
 		entry.toolEntries += new PaletteSeparatorEntry
-		entry.toolEntries += new EAttributeCreateFeature(featureProvider).creationTool
 
+		entry.toolEntries += new EAttributeCreateFeature(featureProvider).creationTool
 		entry.toolEntries += new EReferenceCreateFeature(featureProvider).creationTool
+
 		entry.toolEntries += new PaletteSeparatorEntry
 
 		entry.toolEntries += new EOperationCreateFeature(featureProvider).creationTool
 		return entry
 	}
 
-	def private IPaletteCompartmentEntry createEEnumEntries() {
-		val entry = new PaletteCompartmentEntry("Enumeration", EcorePackage.Literals::EENUM.name)
+	def private IPaletteCompartmentEntry createTypesEntries() {
+		val entry = new PaletteCompartmentEntry("Types", EcorePackage.Literals::EDATA_TYPE.name)
 
-		entry.toolEntries += new EEnumCreateFeature(featureProvider).creationTool
+		entry.toolEntries += new EDataTypeCreateFeature(featureProvider).creationTool
 
 		entry.toolEntries += new PaletteSeparatorEntry
 
+		entry.toolEntries += new EEnumCreateFeature(featureProvider).creationTool
 		entry.toolEntries += new EEnumLiteralCreateFeature(featureProvider).creationTool
-		return entry
-	}
-
-	def private IPaletteCompartmentEntry createEDataTypeEntries() {
-		val entry = new PaletteCompartmentEntry("Data Type", EcorePackage.Literals::EDATA_TYPE.name)
-
-		entry.toolEntries += new EDataTypeCreateFeature(featureProvider).creationTool
 
 		return entry
 	}
