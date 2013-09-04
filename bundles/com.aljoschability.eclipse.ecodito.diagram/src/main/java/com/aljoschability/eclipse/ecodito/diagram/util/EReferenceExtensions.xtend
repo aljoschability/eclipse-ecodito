@@ -18,20 +18,14 @@ class EReferenceExtensions extends EStructuralFeatureExtensions {
 	}
 
 	def EClass getSourceEClass(ICreateConnectionContext context) {
-		println(context.sourcePictogramElement)
-		println(context.sourceAnchor)
-
-		val bo = context.sourceAnchor.bo
+		val bo = context.sourcePictogramElement.bo
 		if (bo instanceof EClass) {
 			return bo
 		}
 	}
 
 	def EClass getTargetEClass(ICreateConnectionContext context) {
-		println(context.targetPictogramElement)
-		println(context.targetAnchor)
-
-		val bo = context.targetAnchor.bo
+		val bo = context.targetPictogramElement.bo
 		if (bo instanceof EClass) {
 			return bo
 		}

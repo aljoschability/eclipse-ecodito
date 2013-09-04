@@ -15,6 +15,7 @@ import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
 import org.eclipse.graphiti.features.impl.Reason
 import org.eclipse.graphiti.util.IColorConstant
+import org.eclipse.graphiti.services.Graphiti
 
 class EClassAddFeature extends AbstractAddFeature {
 	extension EClassExtensions = EClassExtensions::INSTANCE
@@ -27,7 +28,7 @@ class EClassAddFeature extends AbstractAddFeature {
 		val bo = context.EClass
 		val nameText = bo.name
 
-		addContainerShape[
+		val shape = addContainerShape[
 			container = context.container
 			active = true
 			link = context.newObject
@@ -59,6 +60,10 @@ class EClassAddFeature extends AbstractAddFeature {
 				]
 			]
 		]
+
+		Graphiti::peService.createChopboxAnchor(shape)
+
+		return shape
 	}
 
 	override canAdd(IAddContext context) {
