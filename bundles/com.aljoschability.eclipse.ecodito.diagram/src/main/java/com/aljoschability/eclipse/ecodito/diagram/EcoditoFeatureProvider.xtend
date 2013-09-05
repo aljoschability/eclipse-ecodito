@@ -8,6 +8,7 @@ import com.aljoschability.eclipse.ecodito.diagram.features.EClassAddFeature
 import com.aljoschability.eclipse.ecodito.diagram.features.EClassLayoutFeature
 import com.aljoschability.eclipse.ecodito.diagram.features.EClassUpdateFeature
 import com.aljoschability.eclipse.ecodito.diagram.features.EDataTypeAddFeature
+import com.aljoschability.eclipse.ecodito.diagram.features.EDataTypeDirectEditingFeature
 import com.aljoschability.eclipse.ecodito.diagram.features.EDataTypeLayoutFeature
 import com.aljoschability.eclipse.ecodito.diagram.features.EDataTypeUpdateFeature
 import com.aljoschability.eclipse.ecodito.diagram.features.EEnumAddFeature
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.EOperation
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.graphiti.dt.IDiagramTypeProvider
 import org.eclipse.graphiti.features.context.IAddContext
+import org.eclipse.graphiti.features.context.IDirectEditingContext
 import org.eclipse.graphiti.features.context.ILayoutContext
 import org.eclipse.graphiti.features.context.IUpdateContext
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider
@@ -51,6 +53,13 @@ class EcoditoFeatureProvider extends DefaultFeatureProvider {
 			EOperation: new EOperationAddFeature(this)
 			EDataType: new EDataTypeAddFeature(this)
 			default: super.getAddFeature(context)
+		}
+	}
+
+	override getDirectEditingFeature(IDirectEditingContext context) {
+		switch context.bo {
+			EDataType: new EDataTypeDirectEditingFeature(this)
+			default: super.getDirectEditingFeature(context)
 		}
 	}
 

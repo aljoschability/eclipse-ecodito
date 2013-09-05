@@ -8,13 +8,16 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.graphiti.features.IFeatureProvider
 import org.eclipse.graphiti.features.context.IAddContext
 import org.eclipse.graphiti.features.context.ICreateContext
+import org.eclipse.graphiti.features.context.IDirectEditingContext
 import org.eclipse.graphiti.features.context.ILayoutContext
 import org.eclipse.graphiti.features.context.IUpdateContext
 import org.eclipse.graphiti.features.impl.AbstractAddFeature
+import org.eclipse.graphiti.features.impl.AbstractDirectEditingFeature
 import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
 import org.eclipse.graphiti.features.impl.Reason
 import org.eclipse.graphiti.util.IColorConstant
+import org.eclipse.graphiti.mm.algorithms.Text
 
 class EDataTypeAddFeature extends AbstractAddFeature {
 	extension EDataTypeExtensions = EDataTypeExtensions::INSTANCE
@@ -29,8 +32,9 @@ class EDataTypeAddFeature extends AbstractAddFeature {
 			active = true
 			link = context.newObject
 			val frame = addRoundedRectangle[
-				background = IColorConstant::WHITE
-				foreground = IColorConstant::BLACK
+				style = diagram.defaultStyle
+				//background = IColorConstant::WHITE
+				//foreground = IColorConstant::BLACK
 				radius = 16
 				position = context.position
 				size = context.size(200, 100)
@@ -47,7 +51,7 @@ class EDataTypeAddFeature extends AbstractAddFeature {
 					foreground = IColorConstant::BLACK
 					height = 20
 					//font = nameFont
-					value = "Test Calibri Font"
+					value = context.EDataType.name
 				]
 				val titleSeparator = addPolyline[
 					//name = "title.separator"
@@ -71,10 +75,10 @@ class EDataTypeCreateFeature extends CoreCreateFeature {
 
 		name = "Data Type"
 		description = "Create Data Type"
-		imageId = icon
-		largeImageId = icon
+		imageId = EcorePackage.Literals::EDATA_TYPE.name
+		largeImageId = EcorePackage.Literals::EDATA_TYPE.name
 
-		editable = true
+		editable = false
 	}
 
 	override canCreate(ICreateContext context) {
@@ -83,10 +87,39 @@ class EDataTypeCreateFeature extends CoreCreateFeature {
 
 	override createElement(ICreateContext context) {
 		val element = EcoreFactory::eINSTANCE.createEDataType
+		element.name = context.EPackage.nextName("DataType")
 
 		context.EPackage.EClassifiers += element
 
 		return element
+	}
+}
+
+class EDataTypeDirectEditingFeature extends AbstractDirectEditingFeature {
+	extension EDataTypeExtensions = EDataTypeExtensions::INSTANCE
+
+	new(IFeatureProvider fp) {
+		super(fp)
+	}
+
+	override canDirectEdit(IDirectEditingContext context) {
+		context.EDataType != null && context.graphicsAlgorithm instanceof Text
+	}
+
+	override getEditingType() {
+		TYPE_TEXT
+	}
+
+	override getInitialValue(IDirectEditingContext context) {
+		context.EDataType.name
+	}
+
+	override setValue(String value, IDirectEditingContext context) {
+		context.EDataType.name = value
+	}
+
+	override stretchFieldToFitText() {
+		true
 	}
 }
 

@@ -57,8 +57,9 @@ class EEnumAddFeature extends AbstractAddFeature {
 			active = true
 			link = context.newObject
 			val frame = addRoundedRectangle[
-				background = IColorConstant::WHITE
-				foreground = IColorConstant::BLACK
+				//background = IColorConstant::WHITE
+				//foreground = IColorConstant::BLACK
+				style = diagram.defaultStyle
 				radius = 16
 				position = context.position
 				size = context.size(200, 100)
