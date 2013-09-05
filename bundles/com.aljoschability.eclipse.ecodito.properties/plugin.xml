@@ -60,6 +60,37 @@
 			</propertySection>
 		</propertySections>
 	</extension>
+	<extension id="EEnum" point="org.eclipse.ui.views.properties.tabbed.propertySections">
+		<propertySections contributorId="com.aljoschability.eclipse.ecodito.diagram.PropertyContributor">
+			<propertySection class="com.aljoschability.eclipse.ecodito.properties.sections.ENamedElementNameSection" enablesFor="1" id="EEnum.name" tab="model">
+				<input type="org.eclipse.emf.ecore.EEnum"/>
+			</propertySection>
+		</propertySections>
+	</extension>
+	<extension id="EDataType" point="org.eclipse.ui.views.properties.tabbed.propertySections">
+		<propertySections contributorId="com.aljoschability.eclipse.ecodito.diagram.PropertyContributor">
+			<propertySection class="com.aljoschability.eclipse.ecodito.properties.sections.ENamedElementNameSection" enablesFor="1" id="EDataType.name" tab="model">
+				<input type="org.eclipse.emf.ecore.EDataType"/>
+			</propertySection>
+		</propertySections>
+	</extension>
+	<extension id="EEnumLiteral" point="org.eclipse.ui.views.properties.tabbed.propertySections">
+		<propertySections contributorId="com.aljoschability.eclipse.ecodito.diagram.PropertyContributor">
+			<propertySection class="com.aljoschability.eclipse.ecodito.properties.sections.ENamedElementNameSection" enablesFor="1" id="EEnumLiteral.name" tab="model">
+				<input type="org.eclipse.emf.ecore.EEnumLiteral"/>
+			</propertySection>
+		</propertySections>
+	</extension>
+	<extension id="EReference" point="org.eclipse.ui.views.properties.tabbed.propertySections">
+		<propertySections contributorId="com.aljoschability.eclipse.ecodito.diagram.PropertyContributor">
+			<propertySection class="com.aljoschability.eclipse.ecodito.properties.sections.ENamedElementNameSection" enablesFor="1" id="EReference.name" tab="model">
+				<input type="org.eclipse.emf.ecore.EReference"/>
+			</propertySection>
+			<propertySection class="com.aljoschability.eclipse.ecodito.properties.sections.EModelElementDocumentationSection" enablesFor="1" id="EReference.documentation" tab="documentation">
+				<input type="org.eclipse.emf.ecore.EReference"/>
+			</propertySection>
+		</propertySections>
+	</extension>
 	<extension id="EAttribute" point="org.eclipse.ui.views.properties.tabbed.propertySections">
 		<propertySections contributorId="com.aljoschability.eclipse.ecodito.diagram.PropertyContributor">
 			<propertySection class="com.aljoschability.eclipse.ecodito.properties.sections.ENamedElementNameSection" enablesFor="1" id="EAttribute.name" tab="model">
