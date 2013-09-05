@@ -1,6 +1,6 @@
 package com.aljoschability.eclipse.ecodito.diagram.util
 
-import com.aljoschability.eclipse.ecodito.diagram.styles.EDataTypeStyles
+import com.aljoschability.eclipse.core.graphiti.util.StylesExtensions
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
@@ -19,7 +19,7 @@ class EDataTypeExtensions extends EClassifierExtensions {
 	val static public INSTANCE = new EDataTypeExtensions
 
 	extension IGaService = Graphiti::gaService
-	extension EDataTypeStyles = EDataTypeStyles::INSTANCE
+	extension StylesExtensions = StylesExtensions::INSTANCE
 
 	private new() {
 	}
@@ -30,11 +30,41 @@ class EDataTypeExtensions extends EClassifierExtensions {
 		if (style == null) {
 			style = diagram.createStyle(EcorePackage.Literals::EDATA_TYPE.name)
 
-			style.renderingStyle = createGradientColoredAreas(diagram)
+			style.renderingStyle = createGradientAreas()
 			style.foreground = diagram.manageColor(IColorConstant::BLACK)
 		}
 
 		return style
+	}
+
+	def createGradientAreas() {
+		createVerticalGradient[
+			normal = [
+				top = #["F8FBFE", "EDF5FC", "DEEDFA"]
+				gradient = #["D4E7F8", "FAFBFC"]
+				bottom = "E2E5E9"
+			]
+			primarySelection = [
+				top = #["EEF6FD", "D0E6F9", "ACD2F4"]
+				gradient = #["81B9EA", "AAD0F2"]
+				bottom = "9ABFE0"
+			]
+			secondarySelection = [
+				top = #["F5F9FE", "E2EFFC", "CBE3F9"]
+				gradient = #["BBDAF7", "C5E0F7"]
+				bottom = "B2CDE5"
+			]
+			forbiddenAction = [
+				top = #["F8FBFE", "EDF5FC", "DEEDFA"]
+				gradient = #["D4E7F8", "FAFBFC"]
+				bottom = "E2E5E9"
+			]
+			allowedAction = [
+				top = #["F8FBFE", "EDF5FC", "DEEDFA"]
+				gradient = #["D4E7F8", "FAFBFC"]
+				bottom = "E2E5E9"
+			]
+		]
 	}
 
 	def String getIcon() {
