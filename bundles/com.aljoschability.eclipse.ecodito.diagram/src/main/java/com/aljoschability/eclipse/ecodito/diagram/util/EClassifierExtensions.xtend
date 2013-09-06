@@ -14,4 +14,13 @@ abstract class EClassifierExtensions extends GraphitiExtensions {
 			return bo
 		}
 	}
+
+	def String nextName(EPackage ePackage, String prefix) {
+		var index = 1
+		var name = prefix + index
+		while (ePackage.getEClassifier(name) != null) {
+			name = prefix + index++
+		}
+		return name
+	}
 }

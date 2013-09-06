@@ -1,9 +1,9 @@
 package com.aljoschability.eclipse.ecodito.diagram.util
 
-import com.aljoschability.eclipse.core.graphiti.util.StylesExtensions
+import com.aljoschability.eclipse.core.graphiti.services.CreateService
+import com.aljoschability.eclipse.core.graphiti.services.SetService
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
-import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.graphiti.features.context.IAddContext
 import org.eclipse.graphiti.features.context.IDirectEditingContext
@@ -19,56 +19,52 @@ class EDataTypeExtensions extends EClassifierExtensions {
 	val static public INSTANCE = new EDataTypeExtensions
 
 	extension IGaService = Graphiti::gaService
-	extension StylesExtensions = StylesExtensions::INSTANCE
+	extension SetService = SetService::INSTANCE
+	extension CreateService = CreateService::INSTANCE
 
 	private new() {
 	}
 
-	def Style getDefaultStyle(Diagram diagram) {
-		var style = diagram.findStyle(EcorePackage.Literals::EDATA_TYPE.name)
+	def String getIdentifier() {
+		EcorePackage.Literals::EDATA_TYPE.name
+	}
+
+	def Style getShapeStyle(Diagram diagram) {
+		var style = diagram.findStyle(identifier)
 
 		if (style == null) {
-			style = diagram.createStyle(EcorePackage.Literals::EDATA_TYPE.name)
-
-			style.renderingStyle = createGradientAreas()
-			style.foreground = diagram.manageColor(IColorConstant::BLACK)
+			style = diagram.newStyle [
+				id = identifier
+				background = newGradient[
+					normal = #["f7f7f7", "fcfcfc"]
+					primarySelection = #["cccccc", "eeeeee"]
+					secondarySelection = #["cccccc", "eeeeee"]
+					forbiddenAction = #["ff0000", "dddddd"]
+					allowedAction = #["00ff00", "dddddd"]
+				]
+				foreground = "a6a6a6"
+			]
 		}
 
 		return style
 	}
 
-	def createGradientAreas() {
-		createVerticalGradient[
-			normal = [
-				top = #["F8FBFE", "EDF5FC", "DEEDFA"]
-				gradient = #["D4E7F8", "FAFBFC"]
-				bottom = "E2E5E9"
+	def Style getTextStyle(Diagram diagram) {
+		var style = diagram.findStyle(identifier + "/text")
+
+		if (style == null) {
+			style = diagram.newStyle [
+				id = identifier + "/text"
+				font = diagram.manageFont("Segoe UI", 10, false, true)
+				foreground = IColorConstant::BLACK
 			]
-			primarySelection = [
-				top = #["EEF6FD", "D0E6F9", "ACD2F4"]
-				gradient = #["81B9EA", "AAD0F2"]
-				bottom = "9ABFE0"
-			]
-			secondarySelection = [
-				top = #["F5F9FE", "E2EFFC", "CBE3F9"]
-				gradient = #["BBDAF7", "C5E0F7"]
-				bottom = "B2CDE5"
-			]
-			forbiddenAction = [
-				top = #["F8FBFE", "EDF5FC", "DEEDFA"]
-				gradient = #["D4E7F8", "FAFBFC"]
-				bottom = "E2E5E9"
-			]
-			allowedAction = [
-				top = #["F8FBFE", "EDF5FC", "DEEDFA"]
-				gradient = #["D4E7F8", "FAFBFC"]
-				bottom = "E2E5E9"
-			]
-		]
+		}
+
+		return style
 	}
 
 	def String getIcon() {
-		EcorePackage.Literals::EDATA_TYPE.name
+		identifier
 	}
 
 	def EDataType getEDataType(IPictogramElementContext context) {
@@ -84,15 +80,6 @@ class EDataTypeExtensions extends EClassifierExtensions {
 		if (text instanceof Text) {
 			return text
 		}
-	}
-
-	def String nextName(EPackage ePackage, String prefix) {
-		var index = 1
-		var name = prefix + index
-		while (ePackage.getEClassifier(name) != null) {
-			name = prefix + index++
-		}
-		return name
 	}
 
 	def private static EDataType getEDataType(Object element) {

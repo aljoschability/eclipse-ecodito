@@ -1,10 +1,10 @@
 package com.aljoschability.eclipse.ecodito.diagram.features;
 
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
+import com.aljoschability.eclipse.core.graphiti.services.CreateService
 import com.aljoschability.eclipse.ecodito.diagram.util.EClassExtensions
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EcoreFactory
-import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.graphiti.features.IFeatureProvider
 import org.eclipse.graphiti.features.context.IAddContext
 import org.eclipse.graphiti.features.context.ICreateContext
@@ -14,10 +14,9 @@ import org.eclipse.graphiti.features.impl.AbstractAddFeature
 import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
 import org.eclipse.graphiti.features.impl.Reason
-import org.eclipse.graphiti.util.IColorConstant
-import org.eclipse.graphiti.services.Graphiti
 
 class EClassAddFeature extends AbstractAddFeature {
+	extension CreateService = CreateService::INSTANCE
 	extension EClassExtensions = EClassExtensions::INSTANCE
 
 	new(IFeatureProvider fp) {
@@ -25,45 +24,51 @@ class EClassAddFeature extends AbstractAddFeature {
 	}
 
 	override add(IAddContext context) {
-		val bo = context.EClass
-		val nameText = bo.name
-
-		val shape = addContainerShape[
-			container = context.container
-			active = true
+		return context.container.newContainerShape [
 			link = context.newObject
-			val frame = addRoundedRectangle[
-				background = IColorConstant::WHITE
-				foreground = IColorConstant::BLACK
-				radius = 16
+			newChopboxAnchor
+			val frame = newRoundedRectangle[
 				position = context.position
 				size = context.size(200, 100)
-				val titleSymbol = addImage[
-					//name = "title.symbol"
-					id = EClass.simpleName
+				style = diagram.getShapeStyle
+				radius = 6
+				val titleSymbol = newImage[
+					id = identifier
 					position = #[7, 7]
 					size = #[16, 16]
 				]
-				val titleText = addText[
-					//name = "title.text"
+				val titleText = newText[
 					position = #[27, 5]
 					width = parentGraphicsAlgorithm.width - 54
-					foreground = IColorConstant::BLACK
 					height = 20
-					//font = nameFont
-					value = nameText
+					style = diagram.textStyle
+					value = context.EClass.name
 				]
-				val titleSeparator = addPolyline[
-					//name = "title.separator"
-					addPoint(0, 29)
-					addPoint(parentGraphicsAlgorithm.width, 29)
+				val titleSeparator = newPolyline[
+					newPoint(0, 29)
+					newPoint(parentGraphicsAlgorithm.width, 29)
+					style = diagram.getShapeStyle
+				]
+			]
+			newContainerShape(it) [
+				val attributes = newRectangle[
+					x = 0
+					y = 35
+					width = 200
+					height = 30
+				//filled = false
+				]
+			]
+			newContainerShape(it) [
+				val operations = newRectangle[
+					x = 0
+					y = 70
+					width = 200
+					height = 30
+				//filled = false
 				]
 			]
 		]
-
-		Graphiti::peService.createChopboxAnchor(shape)
-
-		return shape
 	}
 
 	override canAdd(IAddContext context) {
@@ -91,6 +96,7 @@ class EClassCreateFeature extends CoreCreateFeature {
 
 	override createElement(ICreateContext context) {
 		val element = EcoreFactory::eINSTANCE.createEClass
+		element.name = context.EPackage.nextName("Class")
 
 		context.EPackage.EClassifiers += element
 

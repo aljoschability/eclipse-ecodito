@@ -1,8 +1,8 @@
 package com.aljoschability.eclipse.ecodito.diagram.features;
 
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
+import com.aljoschability.eclipse.core.graphiti.services.CreateService
 import com.aljoschability.eclipse.ecodito.diagram.util.EDataTypeExtensions
-import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.graphiti.features.IFeatureProvider
@@ -16,10 +16,10 @@ import org.eclipse.graphiti.features.impl.AbstractDirectEditingFeature
 import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
 import org.eclipse.graphiti.features.impl.Reason
-import org.eclipse.graphiti.util.IColorConstant
 import org.eclipse.graphiti.mm.algorithms.Text
 
 class EDataTypeAddFeature extends AbstractAddFeature {
+	extension CreateService = CreateService::INSTANCE
 	extension EDataTypeExtensions = EDataTypeExtensions::INSTANCE
 
 	new(IFeatureProvider fp) {
@@ -27,36 +27,29 @@ class EDataTypeAddFeature extends AbstractAddFeature {
 	}
 
 	override add(IAddContext context) {
-		addContainerShape[
-			container = context.container
-			active = true
+		context.container.newContainerShape [
 			link = context.newObject
-			val frame = addRoundedRectangle[
-				style = diagram.defaultStyle
-				//background = IColorConstant::WHITE
-				//foreground = IColorConstant::BLACK
-				radius = 16
+			val frame = newRoundedRectangle[
 				position = context.position
 				size = context.size(200, 100)
-				val titleSymbol = addImage[
-					//name = "title.symbol"
-					id = EDataType.simpleName
+				style = getShapeStyle(diagram)
+				radius = 6
+				val titleSymbol = newImage[
 					position = #[7, 7]
 					size = #[16, 16]
+					id = icon
 				]
-				val titleText = addText[
-					//name = "title.text"
+				val titleText = newText[
 					position = #[27, 5]
 					width = parentGraphicsAlgorithm.width - 54
-					foreground = IColorConstant::BLACK
 					height = 20
-					//font = nameFont
+					style = getTextStyle(diagram)
 					value = context.EDataType.name
 				]
-				val titleSeparator = addPolyline[
-					//name = "title.separator"
-					addPoint(0, 29)
-					addPoint(parentGraphicsAlgorithm.width, 29)
+				val titleSeparator = newPolyline[
+					newPoint(0, 29)
+					newPoint(parentGraphicsAlgorithm.width, 29)
+					style = getShapeStyle(diagram)
 				]
 			]
 		]

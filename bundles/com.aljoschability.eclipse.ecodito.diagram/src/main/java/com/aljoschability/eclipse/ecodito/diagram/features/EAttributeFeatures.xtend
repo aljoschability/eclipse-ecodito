@@ -14,6 +14,7 @@ import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
 import org.eclipse.graphiti.services.Graphiti
 import org.eclipse.graphiti.util.IColorConstant
+import org.eclipse.graphiti.features.impl.Reason
 
 class EAttributeCreateFeature extends CoreCreateFeature {
 	extension EAttributeExtensions = EAttributeExtensions::INSTANCE
@@ -118,6 +119,8 @@ class EAttributeUpdateFeature extends AbstractUpdateFeature {
 	}
 
 	override updateNeeded(IUpdateContext context) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+
+		//throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		Reason::createFalseReason
 	}
 }

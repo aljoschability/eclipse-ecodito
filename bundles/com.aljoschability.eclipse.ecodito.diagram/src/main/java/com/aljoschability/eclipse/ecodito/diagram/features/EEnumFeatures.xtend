@@ -1,8 +1,8 @@
 package com.aljoschability.eclipse.ecodito.diagram.features;
 
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
+import com.aljoschability.eclipse.core.graphiti.services.CreateService
 import com.aljoschability.eclipse.ecodito.diagram.util.EEnumExtensions
-import org.eclipse.emf.ecore.EEnum
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.graphiti.features.IFeatureProvider
@@ -14,7 +14,6 @@ import org.eclipse.graphiti.features.impl.AbstractAddFeature
 import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
 import org.eclipse.graphiti.features.impl.Reason
-import org.eclipse.graphiti.util.IColorConstant
 
 class EEnumCreateFeature extends CoreCreateFeature {
 	extension EEnumExtensions = EEnumExtensions::INSTANCE
@@ -35,16 +34,17 @@ class EEnumCreateFeature extends CoreCreateFeature {
 	}
 
 	override createElement(ICreateContext context) {
-		val p = context.targetContainer.businessObjectForPictogramElement as EPackage
-
 		val element = EcoreFactory::eINSTANCE.createEEnum
-		p.EClassifiers += element
+		element.name = context.EPackage.nextName("Enumeration")
+
+		context.EPackage.EClassifiers += element
 
 		return element
 	}
 }
 
 class EEnumAddFeature extends AbstractAddFeature {
+	extension CreateService = CreateService::INSTANCE
 	extension EEnumExtensions = EEnumExtensions::INSTANCE
 
 	new(IFeatureProvider fp) {
@@ -52,36 +52,29 @@ class EEnumAddFeature extends AbstractAddFeature {
 	}
 
 	override add(IAddContext context) {
-		addContainerShape[
-			container = context.container
-			active = true
+		context.container.newContainerShape [
 			link = context.newObject
-			val frame = addRoundedRectangle[
-				//background = IColorConstant::WHITE
-				//foreground = IColorConstant::BLACK
-				style = diagram.defaultStyle
-				radius = 16
+			val frame = newRoundedRectangle[
 				position = context.position
 				size = context.size(200, 100)
-				val titleSymbol = addImage[
-					//name = "title.symbol"
-					id = EEnum.simpleName
+				radius = 6
+				style = diagram.getShapeStyle
+				val titleSymbol = newImage[
 					position = #[7, 7]
 					size = #[16, 16]
+					id = icon
 				]
-				val titleText = addText[
-					//name = "title.text"
+				val titleText = newText[
 					position = #[27, 5]
 					width = parentGraphicsAlgorithm.width - 54
-					foreground = IColorConstant::BLACK
 					height = 20
-					//font = nameFont
-					value = "Test Calibri Font"
+					style = diagram.getTextStyle
+					value = context.EEnum.name
 				]
-				val titleSeparator = addPolyline[
-					//name = "title.separator"
-					addPoint(0, 29)
-					addPoint(parentGraphicsAlgorithm.width, 29)
+				val titleSeparator = newPolyline[
+					newPoint(0, 29)
+					newPoint(parentGraphicsAlgorithm.width, 29)
+					style = diagram.getShapeStyle
 				]
 			]
 		]
