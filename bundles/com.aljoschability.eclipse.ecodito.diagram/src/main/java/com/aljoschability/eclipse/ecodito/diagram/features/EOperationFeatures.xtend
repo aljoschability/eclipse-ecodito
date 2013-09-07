@@ -1,7 +1,6 @@
 package com.aljoschability.eclipse.ecodito.diagram.features;
 
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
-import com.aljoschability.eclipse.core.graphiti.services.CreateService
 import com.aljoschability.eclipse.ecodito.diagram.util.EOperationExtensions
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.graphiti.features.IFeatureProvider
@@ -16,6 +15,7 @@ import org.eclipse.graphiti.features.impl.Reason
 import org.eclipse.emf.ecore.EOperation
 import org.eclipse.graphiti.mm.algorithms.Text
 import org.eclipse.graphiti.mm.algorithms.Image
+import com.aljoschability.eclipse.core.graphiti.services.AddService
 
 class EOperationCreateFeature extends CoreCreateFeature {
 	extension EOperationExtensions = EOperationExtensions::INSTANCE
@@ -45,7 +45,7 @@ class EOperationCreateFeature extends CoreCreateFeature {
 }
 
 class EOperationAddFeature extends AbstractAddFeature {
-	extension CreateService = CreateService::INSTANCE
+	extension AddService = AddService::INSTANCE
 	extension EOperationExtensions = EOperationExtensions::INSTANCE
 
 	new(IFeatureProvider fp) {
@@ -53,7 +53,7 @@ class EOperationAddFeature extends AbstractAddFeature {
 	}
 
 	override add(IAddContext context) {
-		context.container.newContainerShape [
+		context.container.addContainerShape [
 			link = context.newObject
 			newRectangle[
 				position = context.position

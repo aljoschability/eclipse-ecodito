@@ -1,7 +1,6 @@
 package com.aljoschability.eclipse.ecodito.diagram.features;
 
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
-import com.aljoschability.eclipse.core.graphiti.services.CreateService
 import com.aljoschability.eclipse.ecodito.diagram.util.EEnumExtensions
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.ecore.EcoreFactory
@@ -14,6 +13,7 @@ import org.eclipse.graphiti.features.impl.AbstractAddFeature
 import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
 import org.eclipse.graphiti.features.impl.Reason
+import com.aljoschability.eclipse.core.graphiti.services.AddService
 
 class EEnumCreateFeature extends CoreCreateFeature {
 	extension EEnumExtensions = EEnumExtensions::INSTANCE
@@ -44,7 +44,7 @@ class EEnumCreateFeature extends CoreCreateFeature {
 }
 
 class EEnumAddFeature extends AbstractAddFeature {
-	extension CreateService = CreateService::INSTANCE
+	extension AddService = AddService::INSTANCE
 	extension EEnumExtensions = EEnumExtensions::INSTANCE
 
 	new(IFeatureProvider fp) {
@@ -52,7 +52,7 @@ class EEnumAddFeature extends AbstractAddFeature {
 	}
 
 	override add(IAddContext context) {
-		context.container.newContainerShape [
+		context.container.addContainerShape [
 			link = context.newObject
 			val frame = newRoundedRectangle[
 				position = context.position

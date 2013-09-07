@@ -1,6 +1,5 @@
 package com.aljoschability.eclipse.ecodito.diagram.util
 
-import com.aljoschability.eclipse.core.graphiti.services.CreateService
 import com.aljoschability.eclipse.core.graphiti.services.SetService
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EcorePackage
@@ -12,6 +11,7 @@ import org.eclipse.graphiti.services.Graphiti
 import org.eclipse.graphiti.services.IGaService
 import org.eclipse.graphiti.util.IColorConstant
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation
+import com.aljoschability.eclipse.core.graphiti.services.AddService
 
 class EAttributeExtensions extends EStructuralFeatureExtensions {
 	val static public INSTANCE = new EAttributeExtensions
@@ -19,7 +19,7 @@ class EAttributeExtensions extends EStructuralFeatureExtensions {
 	extension IGaService = Graphiti::gaService
 
 	extension SetService = SetService::INSTANCE
-	extension CreateService = CreateService::INSTANCE
+	extension AddService = AddService::INSTANCE
 
 	private new() {
 	}

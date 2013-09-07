@@ -1,6 +1,5 @@
 package com.aljoschability.eclipse.ecodito.diagram.util;
 
-import com.aljoschability.eclipse.core.graphiti.services.CreateService
 import com.aljoschability.eclipse.core.graphiti.services.SetService
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EcorePackage
@@ -11,6 +10,7 @@ import org.eclipse.graphiti.mm.pictograms.Diagram
 import org.eclipse.graphiti.services.Graphiti
 import org.eclipse.graphiti.services.IGaService
 import org.eclipse.graphiti.util.IColorConstant
+import com.aljoschability.eclipse.core.graphiti.services.AddService
 
 class EClassExtensions extends EClassifierExtensions {
 	val static public INSTANCE = new EClassExtensions
@@ -18,7 +18,7 @@ class EClassExtensions extends EClassifierExtensions {
 	extension IGaService = Graphiti::gaService
 
 	extension SetService = SetService::INSTANCE
-	extension CreateService = CreateService::INSTANCE
+	extension AddService = AddService::INSTANCE
 
 	private new() {
 	}

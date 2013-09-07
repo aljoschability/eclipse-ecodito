@@ -5,13 +5,16 @@ import com.aljoschability.eclipse.core.graphiti.features.CoreCreateConnectionFea
 import com.aljoschability.eclipse.ecodito.diagram.util.EReferenceExtensions
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.graphiti.features.IFeatureProvider
-import org.eclipse.graphiti.features.context.ICreateConnectionContext
-import org.eclipse.graphiti.features.context.IAddContext
 import org.eclipse.graphiti.features.context.IAddConnectionContext
-import org.eclipse.graphiti.services.Graphiti
-import org.eclipse.graphiti.util.IColorConstant
-import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
+import org.eclipse.graphiti.features.context.IAddContext
+import org.eclipse.graphiti.features.context.ICreateConnectionContext
+import org.eclipse.graphiti.features.context.IReconnectionContext
 import org.eclipse.graphiti.features.context.IUpdateContext
+import org.eclipse.graphiti.features.context.impl.ReconnectionContext
+import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
+import org.eclipse.graphiti.features.impl.DefaultReconnectionFeature
+import org.eclipse.graphiti.features.impl.Reason
+import com.aljoschability.eclipse.core.graphiti.services.AddService
 
 class EReferenceCreateFeature extends CoreCreateConnectionFeature {
 	extension EReferenceExtensions = EReferenceExtensions::INSTANCE
@@ -21,8 +24,8 @@ class EReferenceCreateFeature extends CoreCreateConnectionFeature {
 
 		name = "Reference"
 		description = "Create Reference"
-		imageId = icon
-		largeImageId = icon
+		imageId = identifier
+		largeImageId = identifier
 
 		editable = true
 	}
@@ -37,16 +40,16 @@ class EReferenceCreateFeature extends CoreCreateConnectionFeature {
 
 	override createElement(ICreateConnectionContext context) {
 		val element = EcoreFactory::eINSTANCE.createEReference
+		element.EType = context.targetEClass
 
 		context.sourceEClass.EStructuralFeatures += element
-
-		element.EType = context.targetEClass
 
 		return element
 	}
 }
 
 class EReferenceAddFeature extends CoreAddConnectionFeature {
+	extension AddService = AddService::INSTANCE
 	extension EReferenceExtensions = EReferenceExtensions::INSTANCE
 
 	new(IFeatureProvider fp) {
@@ -54,18 +57,14 @@ class EReferenceAddFeature extends CoreAddConnectionFeature {
 	}
 
 	override add(IAddContext context) {
-		val connection = Graphiti::peService.createFreeFormConnection(getDiagram())
-		connection.start = context.sourceAnchor
-		connection.end = context.targetAnchor
-
-		// create link and wire it
-		link(connection, context.EReference)
-
-		val polyline = Graphiti::gaService.createPolyline(connection)
-		polyline.lineWidth = 2
-		polyline.foreground = IColorConstant::RED
-
-		return connection
+		diagram.addFreeFormConnection [
+			start = context.sourceAnchor
+			end = context.targetAnchor
+			link = context.newObject
+			newPolyline[
+				style = diagram.connectionStyle
+			]
+		]
 	}
 
 	override canAdd(IAddContext context) {
@@ -77,20 +76,49 @@ class EReferenceAddFeature extends CoreAddConnectionFeature {
 	}
 }
 
+class EReferenceReconnectFeature extends DefaultReconnectionFeature {
+	extension EReferenceExtensions = EReferenceExtensions::INSTANCE
+
+	new(IFeatureProvider fp) {
+		super(fp)
+	}
+
+	override canStartReconnect(IReconnectionContext context) {
+		context.EReference != null
+	}
+
+	override canReconnect(IReconnectionContext context) {
+		return context.EReference != null && context.newEClass != null
+	}
+
+	override postReconnect(IReconnectionContext context) {
+		switch context.reconnectType {
+			case ReconnectionContext::RECONNECT_SOURCE: {
+				context.newEClass.EStructuralFeatures += context.EReference
+			}
+			case ReconnectionContext::RECONNECT_TARGET: {
+				context.EReference.EType = context.newEClass
+			}
+		}
+	}
+}
+
 class EReferenceUpdateFeature extends AbstractUpdateFeature {
+	extension EReferenceExtensions = EReferenceExtensions::INSTANCE
+
 	new(IFeatureProvider fp) {
 		super(fp)
 	}
 
 	override canUpdate(IUpdateContext context) {
-		false
-	}
-
-	override update(IUpdateContext context) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		context.EReference != null
 	}
 
 	override updateNeeded(IUpdateContext context) {
+		Reason::createFalseReason
+	}
+
+	override update(IUpdateContext context) {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 }

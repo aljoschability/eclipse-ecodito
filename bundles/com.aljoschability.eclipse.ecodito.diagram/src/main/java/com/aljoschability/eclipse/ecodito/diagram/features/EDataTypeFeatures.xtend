@@ -1,7 +1,6 @@
 package com.aljoschability.eclipse.ecodito.diagram.features;
 
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
-import com.aljoschability.eclipse.core.graphiti.services.CreateService
 import com.aljoschability.eclipse.ecodito.diagram.util.EDataTypeExtensions
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.emf.ecore.EcorePackage
@@ -17,9 +16,10 @@ import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
 import org.eclipse.graphiti.features.impl.Reason
 import org.eclipse.graphiti.mm.algorithms.Text
+import com.aljoschability.eclipse.core.graphiti.services.AddService
 
 class EDataTypeAddFeature extends AbstractAddFeature {
-	extension CreateService = CreateService::INSTANCE
+	extension AddService = AddService::INSTANCE
 	extension EDataTypeExtensions = EDataTypeExtensions::INSTANCE
 
 	new(IFeatureProvider fp) {
@@ -27,7 +27,7 @@ class EDataTypeAddFeature extends AbstractAddFeature {
 	}
 
 	override add(IAddContext context) {
-		context.container.newContainerShape [
+		context.container.addContainerShape [
 			link = context.newObject
 			val frame = newRoundedRectangle[
 				position = context.position
