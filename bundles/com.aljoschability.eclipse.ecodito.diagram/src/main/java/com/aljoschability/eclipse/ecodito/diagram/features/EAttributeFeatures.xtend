@@ -1,8 +1,8 @@
 package com.aljoschability.eclipse.ecodito.diagram.features
 
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
+import com.aljoschability.eclipse.core.graphiti.services.CreateService
 import com.aljoschability.eclipse.ecodito.diagram.util.EAttributeExtensions
-import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.graphiti.features.IFeatureProvider
 import org.eclipse.graphiti.features.context.IAddContext
@@ -12,9 +12,8 @@ import org.eclipse.graphiti.features.context.IUpdateContext
 import org.eclipse.graphiti.features.impl.AbstractAddFeature
 import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
-import org.eclipse.graphiti.services.Graphiti
-import org.eclipse.graphiti.util.IColorConstant
 import org.eclipse.graphiti.features.impl.Reason
+import org.eclipse.emf.ecore.EClass
 
 class EAttributeCreateFeature extends CoreCreateFeature {
 	extension EAttributeExtensions = EAttributeExtensions::INSTANCE
@@ -24,8 +23,8 @@ class EAttributeCreateFeature extends CoreCreateFeature {
 
 		name = "Attribute"
 		description = "Create Attribute"
-		imageId = icon
-		largeImageId = icon
+		imageId = identifier
+		largeImageId = identifier
 
 		editable = true
 	}
@@ -36,14 +35,26 @@ class EAttributeCreateFeature extends CoreCreateFeature {
 
 	override createElement(ICreateContext context) {
 		val element = EcoreFactory::eINSTANCE.createEAttribute
+		element.name = context.EClass.nextAttributeName("attribute")
 
 		context.EClass.EStructuralFeatures += element
 
 		return element
 	}
+
+	def String nextAttributeName(EClass eClass, String prefix) {
+		var index = 1
+		var name = prefix + index
+		while (eClass.getEStructuralFeature(name) != null) {
+			name = prefix + index++
+		}
+		return name
+	}
+
 }
 
 class EAttributeAddFeature extends AbstractAddFeature {
+	extension CreateService = CreateService::INSTANCE
 	extension EAttributeExtensions = EAttributeExtensions::INSTANCE
 
 	new(IFeatureProvider fp) {
@@ -51,37 +62,25 @@ class EAttributeAddFeature extends AbstractAddFeature {
 	}
 
 	override add(IAddContext context) {
-		val cpe = context.getTargetContainer()
-
-		val pe = Graphiti.getPeService().createContainerShape(cpe, true)
-		val bo = context.getNewObject() as EAttribute
-		link(pe, bo)
-
-		// main rectangle
-		val ga = Graphiti.getGaService().createPlainRoundedRectangle(pe, 0, 0)
-		ga.setCornerHeight(16)
-		ga.setCornerWidth(16)
-		ga.setLineWidth(1)
-		ga.setBackground(manageColor(IColorConstant.WHITE))
-		ga.setForeground(manageColor(IColorConstant.BLACK))
-
-		ga.setX(context.getX())
-		ga.setY(context.getY())
-		ga.setWidth(context.getWidth())
-		ga.setHeight(context.getHeight())
-
-		// name text
-		val nameText = Graphiti.getGaService().createPlainText(ga)
-		nameText.setValue(bo.getName())
-		nameText.setForeground(manageColor(IColorConstant.BLACK))
-		nameText.setFilled(false)
-
-		nameText.setX(0)
-		nameText.setY(0)
-		nameText.setWidth(ga.getWidth())
-		nameText.setHeight(20)
-
-		return pe
+		context.container.newContainerShape [
+			link = context.newObject
+			newRectangle[
+				position = context.position
+				size = context.size(150, 20)
+				style = diagram.shapeStyle
+				newImage[ // attribute symbol
+					id = context.EAttribute.symbol
+					position = #[2, 2]
+					size = #[16, 16]
+				]
+				newText[ // attribute text
+					position = #[20, 0]
+					size = #[150, 20]
+					style = diagram.textStyle
+					value = context.EAttribute.name
+				]
+			]
+		]
 	}
 
 	override canAdd(IAddContext context) {

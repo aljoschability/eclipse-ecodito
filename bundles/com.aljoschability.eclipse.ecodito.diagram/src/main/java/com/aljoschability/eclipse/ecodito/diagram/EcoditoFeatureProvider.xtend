@@ -35,6 +35,8 @@ import org.eclipse.graphiti.features.context.IDirectEditingContext
 import org.eclipse.graphiti.features.context.ILayoutContext
 import org.eclipse.graphiti.features.context.IUpdateContext
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider
+import org.eclipse.graphiti.features.context.IResizeShapeContext
+import com.aljoschability.eclipse.core.graphiti.features.NoResizeShapeFeature
 
 class EcoditoFeatureProvider extends DefaultFeatureProvider {
 	extension GraphitiExtensions = GraphitiExtensions::INSTANCE
@@ -53,6 +55,15 @@ class EcoditoFeatureProvider extends DefaultFeatureProvider {
 			EOperation: new EOperationAddFeature(this)
 			EDataType: new EDataTypeAddFeature(this)
 			default: super.getAddFeature(context)
+		}
+	}
+
+	override getResizeShapeFeature(IResizeShapeContext context) {
+		switch context.bo {
+			EAttribute: new NoResizeShapeFeature(this)
+			EOperation: new NoResizeShapeFeature(this)
+			EEnumLiteral: new NoResizeShapeFeature(this)
+			default: super.getResizeShapeFeature(context)
 		}
 	}
 

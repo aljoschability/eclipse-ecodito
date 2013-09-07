@@ -1,8 +1,8 @@
 package com.aljoschability.eclipse.ecodito.diagram.features;
 
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
+import com.aljoschability.eclipse.core.graphiti.services.CreateService
 import com.aljoschability.eclipse.ecodito.diagram.util.EOperationExtensions
-import org.eclipse.emf.ecore.EOperation
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.graphiti.features.IFeatureProvider
 import org.eclipse.graphiti.features.context.IAddContext
@@ -12,8 +12,10 @@ import org.eclipse.graphiti.features.context.IUpdateContext
 import org.eclipse.graphiti.features.impl.AbstractAddFeature
 import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
-import org.eclipse.graphiti.services.Graphiti
-import org.eclipse.graphiti.util.IColorConstant
+import org.eclipse.graphiti.features.impl.Reason
+import org.eclipse.emf.ecore.EOperation
+import org.eclipse.graphiti.mm.algorithms.Text
+import org.eclipse.graphiti.mm.algorithms.Image
 
 class EOperationCreateFeature extends CoreCreateFeature {
 	extension EOperationExtensions = EOperationExtensions::INSTANCE
@@ -23,8 +25,8 @@ class EOperationCreateFeature extends CoreCreateFeature {
 
 		name = "Operation"
 		description = "Create Operation"
-		imageId = icon
-		largeImageId = icon
+		imageId = identifier
+		largeImageId = identifier
 
 		editable = true
 	}
@@ -43,6 +45,7 @@ class EOperationCreateFeature extends CoreCreateFeature {
 }
 
 class EOperationAddFeature extends AbstractAddFeature {
+	extension CreateService = CreateService::INSTANCE
 	extension EOperationExtensions = EOperationExtensions::INSTANCE
 
 	new(IFeatureProvider fp) {
@@ -50,61 +53,89 @@ class EOperationAddFeature extends AbstractAddFeature {
 	}
 
 	override add(IAddContext context) {
-		val cpe = context.getTargetContainer()
-
-		val pe = Graphiti.getPeService().createContainerShape(cpe, true)
-		val bo = context.getNewObject() as EOperation
-		link(pe, bo)
-
-		// main rectangle
-		val ga = Graphiti.getGaService().createPlainRoundedRectangle(pe, 0, 0)
-		ga.setCornerHeight(16)
-		ga.setCornerWidth(16)
-		ga.setLineWidth(1)
-		ga.setBackground(manageColor(IColorConstant.WHITE))
-		ga.setForeground(manageColor(IColorConstant.BLACK))
-
-		ga.setX(context.getX())
-		ga.setY(context.getY())
-		ga.setWidth(context.getWidth())
-		ga.setHeight(context.getHeight())
-
-		// name text
-		val nameText = Graphiti.getGaService().createPlainText(ga)
-		nameText.setValue(bo.getName())
-		nameText.setForeground(manageColor(IColorConstant.BLACK))
-		nameText.setFilled(false)
-
-		nameText.setX(0)
-		nameText.setY(0)
-		nameText.setWidth(ga.getWidth())
-		nameText.setHeight(20)
-
-		return pe
+		context.container.newContainerShape [
+			link = context.newObject
+			newRectangle[
+				position = context.position
+				size = context.size(150, 20)
+				style = diagram.shapeStyle
+				newImage[ // attribute symbol
+					id = context.EOperation.symbol
+					position = #[2, 2]
+					size = #[16, 16]
+				]
+				newText[ // attribute text
+					position = #[20, 0]
+					size = #[150, 20]
+					style = diagram.textStyle
+					value = context.EOperation.name
+				]
+			]
+		]
 	}
 
 	override canAdd(IAddContext context) {
 		context.EOperation != null
 	}
-
 }
 
 class EOperationUpdateFeature extends AbstractUpdateFeature {
+	extension EOperationExtensions = EOperationExtensions::INSTANCE
+
 	new(IFeatureProvider fp) {
 		super(fp)
 	}
 
 	override canUpdate(IUpdateContext context) {
-		false
-	}
-
-	override update(IUpdateContext context) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		context.EOperation != null
 	}
 
 	override updateNeeded(IUpdateContext context) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		if (context.EOperation.text != context.text.value) {
+			return Reason::createTrueReason
+		}
+
+		if (context.EOperation.symbol != context.symbol.id) {
+			return Reason::createTrueReason
+		}
+
+		return Reason::createFalseReason
 	}
+
+	def String getText(EOperation element) {
+		val parameters = new StringBuilder
+		var i = element.EParameters.length
+		for (p : element.EParameters) {
+			parameters.append(p.name)
+			if (i > 1) {
+				parameters.append(", ")
+			}
+			i--
+		}
+
+		return '''«element.name»(«parameters»)'''
+	}
+
+	def Text getText(IUpdateContext element) {
+		element.pictogramElement.graphicsAlgorithm.graphicsAlgorithmChildren.get(1) as Text
+	}
+
+	def Image getSymbol(IUpdateContext element) {
+		element.pictogramElement.graphicsAlgorithm.graphicsAlgorithmChildren.get(0) as Image
+	}
+
+	override update(IUpdateContext context) {
+		if (context.EOperation.text != context.text.value) {
+			context.text.value = context.EOperation.text
+		}
+
+		if (context.EOperation.symbol != context.symbol.id) {
+			context.symbol.id = context.EOperation.symbol
+		}
+
+		return true
+	}
+
 }
 
 class EOperationLayoutFeature extends AbstractLayoutFeature {

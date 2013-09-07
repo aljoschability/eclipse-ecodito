@@ -24,48 +24,35 @@ class EClassAddFeature extends AbstractAddFeature {
 	}
 
 	override add(IAddContext context) {
-		return context.container.newContainerShape [
+		context.container.newContainerShape [
 			link = context.newObject
 			newChopboxAnchor
-			val frame = newRoundedRectangle[
+			newRoundedRectangle[
 				position = context.position
 				size = context.size(200, 100)
 				style = diagram.getShapeStyle
 				radius = 6
-				val titleSymbol = newImage[
+				newImage[ // class symbol
 					id = identifier
 					position = #[7, 7]
 					size = #[16, 16]
 				]
-				val titleText = newText[
+				newText[ // class name
 					position = #[27, 5]
 					width = parentGraphicsAlgorithm.width - 54
 					height = 20
 					style = diagram.textStyle
 					value = context.EClass.name
 				]
-				val titleSeparator = newPolyline[
+				newPolyline[ // name separator
 					newPoint(0, 29)
 					newPoint(parentGraphicsAlgorithm.width, 29)
 					style = diagram.getShapeStyle
 				]
-			]
-			newContainerShape(it) [
-				val attributes = newRectangle[
-					x = 0
-					y = 35
-					width = 200
-					height = 30
-				//filled = false
-				]
-			]
-			newContainerShape(it) [
-				val operations = newRectangle[
-					x = 0
-					y = 70
-					width = 200
-					height = 30
-				//filled = false
+				newPolyline[ // attribute separator
+					newPoint(0, 39)
+					newPoint(parentGraphicsAlgorithm.width, 39)
+					style = diagram.getShapeStyle
 				]
 			]
 		]
