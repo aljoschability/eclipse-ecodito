@@ -104,4 +104,17 @@
 			</propertySection>
 		</propertySections>
 	</extension>
+	<extension id="EOperation" point="org.eclipse.ui.views.properties.tabbed.propertySections">
+		<propertySections contributorId="com.aljoschability.eclipse.ecodito.diagram.PropertyContributor">
+			<propertySection class="com.aljoschability.eclipse.ecodito.properties.sections.ENamedElementNameSection" enablesFor="1" id="EOperation.name" tab="model">
+				<input type="org.eclipse.emf.ecore.EOperation"/>
+			</propertySection>
+			<propertySection afterSection="EAttribute.name" class="com.aljoschability.eclipse.ecodito.properties.sections.ETypedElementETypeSection" enablesFor="1" id="EOperation.type" tab="model">
+				<input type="org.eclipse.emf.ecore.EOperation"/>
+			</propertySection>
+			<propertySection class="com.aljoschability.eclipse.ecodito.properties.sections.EModelElementDocumentationSection" enablesFor="1" id="EOperation.documentation" tab="documentation">
+				<input type="org.eclipse.emf.ecore.EOperation"/>
+			</propertySection>
+		</propertySections>
+	</extension>
 </plugin>
