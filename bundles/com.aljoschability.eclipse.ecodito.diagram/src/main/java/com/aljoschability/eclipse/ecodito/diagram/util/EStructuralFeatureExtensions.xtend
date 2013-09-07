@@ -14,4 +14,13 @@ abstract class EStructuralFeatureExtensions extends GraphitiExtensions {
 			return bo
 		}
 	}
+
+	def String nextEStructuralFeatureName(EClass element, String prefix) {
+		var index = 1
+		var name = prefix + index
+		while (element.getEStructuralFeature(name) != null) {
+			name = prefix + index++
+		}
+		return name
+	}
 }

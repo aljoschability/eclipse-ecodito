@@ -1,6 +1,7 @@
 package com.aljoschability.eclipse.ecodito.diagram.features
 
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
+import com.aljoschability.eclipse.core.graphiti.services.AddService
 import com.aljoschability.eclipse.ecodito.diagram.util.EAttributeExtensions
 import org.eclipse.emf.ecore.EcoreFactory
 import org.eclipse.graphiti.features.IFeatureProvider
@@ -12,8 +13,6 @@ import org.eclipse.graphiti.features.impl.AbstractAddFeature
 import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
 import org.eclipse.graphiti.features.impl.Reason
-import org.eclipse.emf.ecore.EClass
-import com.aljoschability.eclipse.core.graphiti.services.AddService
 
 class EAttributeCreateFeature extends CoreCreateFeature {
 	extension EAttributeExtensions = EAttributeExtensions::INSTANCE
@@ -25,32 +24,20 @@ class EAttributeCreateFeature extends CoreCreateFeature {
 		description = "Create Attribute"
 		imageId = identifier
 		largeImageId = identifier
-
-		editable = true
 	}
 
 	override canCreate(ICreateContext context) {
-		return context.EClass != null
+		context.EClass != null
 	}
 
 	override createElement(ICreateContext context) {
 		val element = EcoreFactory::eINSTANCE.createEAttribute
-		element.name = context.EClass.nextAttributeName("attribute")
+		element.name = context.EClass.nextEStructuralFeatureName("attribute")
 
 		context.EClass.EStructuralFeatures += element
 
 		return element
 	}
-
-	def String nextAttributeName(EClass eClass, String prefix) {
-		var index = 1
-		var name = prefix + index
-		while (eClass.getEStructuralFeature(name) != null) {
-			name = prefix + index++
-		}
-		return name
-	}
-
 }
 
 class EAttributeAddFeature extends AbstractAddFeature {
@@ -61,18 +48,24 @@ class EAttributeAddFeature extends AbstractAddFeature {
 		super(fp)
 	}
 
+	override canAdd(IAddContext context) {
+		context.EAttribute != null
+	}
+
 	override add(IAddContext context) {
 		context.container.addContainerShape [
 			link = context.newObject
-			addRectangle[
+			addRectangle [
 				position = context.position
 				size = context.size(150, 20)
 				style = diagram.shapeStyle
-				addImage(context.EAttribute.symbol) [ // attribute symbol
+				// symbol
+				addImage(context.EAttribute.image) [
 					position = #[2, 2]
 					size = #[16, 16]
 				]
-				addText[ // attribute text
+				// text
+				addText [
 					position = #[20, 0]
 					size = #[150, 20]
 					style = diagram.textStyle
@@ -80,10 +73,6 @@ class EAttributeAddFeature extends AbstractAddFeature {
 				]
 			]
 		]
-	}
-
-	override canAdd(IAddContext context) {
-		context.EAttribute != null
 	}
 }
 
@@ -104,21 +93,37 @@ class EAttributeLayoutFeature extends AbstractLayoutFeature {
 }
 
 class EAttributeUpdateFeature extends AbstractUpdateFeature {
+	extension EAttributeExtensions = EAttributeExtensions::INSTANCE
+
 	new(IFeatureProvider fp) {
 		super(fp)
 	}
 
 	override canUpdate(IUpdateContext context) {
-		false
-	}
-
-	override update(IUpdateContext context) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		context.EAttribute != null
 	}
 
 	override updateNeeded(IUpdateContext context) {
+		if (context.image.value != context.EAttribute.image) {
+			return Reason::createTrueReason
+		}
 
-		//throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		if (context.text.value != context.EAttribute.text) {
+			return Reason::createTrueReason
+		}
+
 		Reason::createFalseReason
+	}
+
+	override update(IUpdateContext context) {
+		if (context.image.value != context.EAttribute.image) {
+			context.image.value = context.EAttribute.image
+		}
+
+		if (context.text.value != context.EAttribute.text) {
+			context.text.value = context.EAttribute.text
+		}
+
+		return true
 	}
 }

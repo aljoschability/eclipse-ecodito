@@ -42,8 +42,8 @@ class EClassCreateFeature extends CoreCreateFeature {
 }
 
 class EClassAddFeature extends AbstractAddFeature {
-	extension EClassExtensions = EClassExtensions::INSTANCE
 	extension AddService = AddService::INSTANCE
+	extension EClassExtensions = EClassExtensions::INSTANCE
 
 	new(IFeatureProvider fp) {
 		super(fp)
@@ -53,28 +53,32 @@ class EClassAddFeature extends AbstractAddFeature {
 		context.container.addContainerShape [
 			link = context.newObject
 			addChopboxAnchor
-			addRoundedRectangle[
+			addRoundedRectangle [
 				position = context.position
 				size = context.size(200, 100)
 				style = diagram.getShapeStyle
 				radius = 6
-				addImage(identifier) [ // class symbol
+				// symbol
+				addImage(context.EClass.symbol) [
 					position = #[7, 7]
 					size = #[16, 16]
 				]
-				addText[ // class name
+				// name
+				addText [
 					position = #[27, 5]
 					width = parentGraphicsAlgorithm.width - 54
 					height = 20
 					style = diagram.textStyle
 					value = context.EClass.name
 				]
-				addPolyline[ // name separator
+				// name separator
+				addPolyline [
 					addPoint(0, 29)
 					addPoint(parentGraphicsAlgorithm.width, 29)
 					style = diagram.getShapeStyle
 				]
-				addPolyline[ // attribute separator
+				// attributes separator
+				addPolyline [
 					addPoint(0, 39)
 					addPoint(parentGraphicsAlgorithm.width, 39)
 					style = diagram.getShapeStyle

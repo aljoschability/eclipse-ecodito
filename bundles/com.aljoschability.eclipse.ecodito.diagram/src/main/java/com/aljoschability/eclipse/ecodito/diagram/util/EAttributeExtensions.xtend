@@ -12,6 +12,8 @@ import org.eclipse.graphiti.services.IGaService
 import org.eclipse.graphiti.util.IColorConstant
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation
 import com.aljoschability.eclipse.core.graphiti.services.AddService
+import org.eclipse.graphiti.mm.algorithms.Text
+import org.eclipse.graphiti.mm.algorithms.Image
 
 class EAttributeExtensions extends EStructuralFeatureExtensions {
 	val static public INSTANCE = new EAttributeExtensions
@@ -28,12 +30,16 @@ class EAttributeExtensions extends EStructuralFeatureExtensions {
 		EcorePackage.Literals::EATTRIBUTE.name
 	}
 
-	def String getSymbol(EAttribute element) {
+	def String getImage(EAttribute element) {
 		identifier
 	}
 
 	def EAttribute getEAttribute(IPictogramElementContext context) {
 		context.bo.EAttribute
+	}
+
+	def String getText(EAttribute element) {
+		'''«element.name»: «element.EType?.name»'''
 	}
 
 	def EAttribute getEAttribute(IAddContext context) {
@@ -74,5 +80,13 @@ class EAttributeExtensions extends EStructuralFeatureExtensions {
 		}
 
 		return style
+	}
+
+	def Image getImage(IPictogramElementContext context) {
+		context.pictogramElement.graphicsAlgorithm.graphicsAlgorithmChildren.get(0) as Image
+	}
+
+	def Text getText(IPictogramElementContext context) {
+		context.pictogramElement.graphicsAlgorithm.graphicsAlgorithmChildren.get(1) as Text
 	}
 }

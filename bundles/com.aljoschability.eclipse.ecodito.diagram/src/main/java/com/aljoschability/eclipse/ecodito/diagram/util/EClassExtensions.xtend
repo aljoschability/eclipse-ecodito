@@ -27,6 +27,10 @@ class EClassExtensions extends EClassifierExtensions {
 		EcorePackage.Literals::ECLASS.name
 	}
 
+	def String getSymbol(EClass element) {
+		identifier
+	}
+
 	def Style getShapeStyle(Diagram diagram) {
 		var style = diagram.findStyle(identifier)
 
