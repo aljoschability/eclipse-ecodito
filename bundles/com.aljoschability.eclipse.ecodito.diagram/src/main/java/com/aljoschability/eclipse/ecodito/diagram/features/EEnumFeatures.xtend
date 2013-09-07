@@ -35,7 +35,7 @@ class EEnumCreateFeature extends CoreCreateFeature {
 
 	override createElement(ICreateContext context) {
 		val element = EcoreFactory::eINSTANCE.createEEnum
-		element.name = context.EPackage.nextName("Enumeration")
+		element.name = context.EPackage.nextEClassifierName("Enumeration")
 
 		context.EPackage.EClassifiers += element
 

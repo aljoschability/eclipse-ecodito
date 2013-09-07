@@ -15,9 +15,35 @@ import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
 import org.eclipse.graphiti.features.impl.Reason
 import com.aljoschability.eclipse.core.graphiti.services.AddService
 
-class EClassAddFeature extends AbstractAddFeature {
-	extension AddService = AddService::INSTANCE
+class EClassCreateFeature extends CoreCreateFeature {
 	extension EClassExtensions = EClassExtensions::INSTANCE
+
+	new(IFeatureProvider fp) {
+		super(fp)
+
+		name = "Class"
+		description = "Create Class"
+		imageId = identifier
+		largeImageId = identifier
+	}
+
+	override canCreate(ICreateContext context) {
+		context.EPackage != null
+	}
+
+	override createElement(ICreateContext context) {
+		val element = EcoreFactory::eINSTANCE.createEClass
+		element.name = context.EPackage.nextEClassifierName("Class")
+
+		context.EPackage.EClassifiers += element
+
+		return element
+	}
+}
+
+class EClassAddFeature extends AbstractAddFeature {
+	extension EClassExtensions = EClassExtensions::INSTANCE
+	extension AddService = AddService::INSTANCE
 
 	new(IFeatureProvider fp) {
 		super(fp)
@@ -60,34 +86,6 @@ class EClassAddFeature extends AbstractAddFeature {
 
 	override canAdd(IAddContext context) {
 		context.newObject instanceof EClass && context.EPackage != null
-	}
-}
-
-class EClassCreateFeature extends CoreCreateFeature {
-	extension EClassExtensions = EClassExtensions::INSTANCE
-
-	new(IFeatureProvider fp) {
-		super(fp)
-
-		name = "Class"
-		description = "Create Class"
-		imageId = icon
-		largeImageId = icon
-
-		editable = true
-	}
-
-	override canCreate(ICreateContext context) {
-		return context.EPackage != null
-	}
-
-	override createElement(ICreateContext context) {
-		val element = EcoreFactory::eINSTANCE.createEClass
-		element.name = context.EPackage.nextName("Class")
-
-		context.EPackage.EClassifiers += element
-
-		return element
 	}
 }
 

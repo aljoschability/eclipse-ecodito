@@ -80,7 +80,7 @@ class EDataTypeCreateFeature extends CoreCreateFeature {
 
 	override createElement(ICreateContext context) {
 		val element = EcoreFactory::eINSTANCE.createEDataType
-		element.name = context.EPackage.nextName("DataType")
+		element.name = context.EPackage.nextEClassifierName("DataType")
 
 		context.EPackage.EClassifiers += element
 
