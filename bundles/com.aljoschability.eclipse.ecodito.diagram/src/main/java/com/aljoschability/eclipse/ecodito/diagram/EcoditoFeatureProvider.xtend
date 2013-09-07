@@ -37,6 +37,10 @@ import org.eclipse.graphiti.features.context.IUpdateContext
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider
 import org.eclipse.graphiti.features.context.IResizeShapeContext
 import com.aljoschability.eclipse.core.graphiti.features.NoResizeShapeFeature
+import org.eclipse.graphiti.features.context.IReconnectionContext
+import com.aljoschability.eclipse.ecodito.diagram.features.EReferenceReconnectFeature
+import org.eclipse.emf.ecore.EcorePackage
+import com.aljoschability.eclipse.ecodito.diagram.features.EClassInheritanceAddFeature
 
 class EcoditoFeatureProvider extends DefaultFeatureProvider {
 	extension GraphitiExtensions = GraphitiExtensions::INSTANCE
@@ -47,6 +51,7 @@ class EcoditoFeatureProvider extends DefaultFeatureProvider {
 
 	override getAddFeature(IAddContext context) {
 		switch context.newObject {
+			case EcorePackage.Literals::ECLASS__ESUPER_TYPES: new EClassInheritanceAddFeature(this)
 			EEnum: new EEnumAddFeature(this)
 			EEnumLiteral: new EEnumLiteralAddFeature(this)
 			EClass: new EClassAddFeature(this)
@@ -55,6 +60,13 @@ class EcoditoFeatureProvider extends DefaultFeatureProvider {
 			EOperation: new EOperationAddFeature(this)
 			EDataType: new EDataTypeAddFeature(this)
 			default: super.getAddFeature(context)
+		}
+	}
+
+	override getReconnectionFeature(IReconnectionContext context) {
+		switch context.connection.bo {
+			EReference: new EReferenceReconnectFeature(this)
+			default: super.getReconnectionFeature(context)
 		}
 	}
 

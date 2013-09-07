@@ -13,6 +13,7 @@ import org.eclipse.graphiti.dt.IDiagramTypeProvider
 import org.eclipse.graphiti.palette.IPaletteCompartmentEntry
 import org.eclipse.graphiti.palette.impl.PaletteCompartmentEntry
 import org.eclipse.graphiti.palette.impl.PaletteSeparatorEntry
+import com.aljoschability.eclipse.ecodito.diagram.features.EClassInheritanceCreateFeature
 
 class EcoditoToolBehaviorProvider extends CoreToolBehaviorProvider {
 	new(IDiagramTypeProvider dtp) {
@@ -32,6 +33,10 @@ class EcoditoToolBehaviorProvider extends CoreToolBehaviorProvider {
 		val entry = new PaletteCompartmentEntry("Classes", EcorePackage.Literals::ECLASS.name)
 
 		entry.toolEntries += new EClassCreateFeature(featureProvider).creationTool
+
+		entry.toolEntries += new PaletteSeparatorEntry
+
+		entry.toolEntries += new EClassInheritanceCreateFeature(featureProvider).creationTool
 
 		entry.toolEntries += new PaletteSeparatorEntry
 
