@@ -112,7 +112,7 @@ class EAttributeUpdateFeature extends AbstractUpdateFeature {
 			return Reason::createTrueReason
 		}
 
-		Reason::createFalseReason
+		return Reason::createFalseReason
 	}
 
 	override update(IUpdateContext context) {
