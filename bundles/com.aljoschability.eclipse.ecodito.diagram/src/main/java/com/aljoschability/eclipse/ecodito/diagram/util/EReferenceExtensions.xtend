@@ -41,7 +41,7 @@ class EReferenceExtensions extends EStructuralFeatureExtensions {
 	def Style getConnectionStyle(Diagram diagram) {
 		var style = diagram.findStyle(identifier)
 		if (style == null) {
-			style = diagram.newStyle [
+			style = diagram.addStyle [
 				id = identifier
 				foreground = IColorConstant::BLACK
 				lineStyle = LineStyle::SOLID

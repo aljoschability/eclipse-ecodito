@@ -54,26 +54,25 @@ class EEnumAddFeature extends AbstractAddFeature {
 	override add(IAddContext context) {
 		context.container.addContainerShape [
 			link = context.newObject
-			val frame = newRoundedRectangle[
+			val frame = addRoundedRectangle[
 				position = context.position
 				size = context.size(200, 100)
 				radius = 6
 				style = diagram.getShapeStyle
-				val titleSymbol = newImage[
+				val titleSymbol = addImage(icon) [
 					position = #[7, 7]
 					size = #[16, 16]
-					id = icon
 				]
-				val titleText = newText[
+				val titleText = addText[
 					position = #[27, 5]
 					width = parentGraphicsAlgorithm.width - 54
 					height = 20
 					style = diagram.getTextStyle
 					value = context.EEnum.name
 				]
-				val titleSeparator = newPolyline[
-					newPoint(0, 29)
-					newPoint(parentGraphicsAlgorithm.width, 29)
+				val titleSeparator = addPolyline[
+					addPoint(0, 29)
+					addPoint(parentGraphicsAlgorithm.width, 29)
 					style = diagram.getShapeStyle
 				]
 			]

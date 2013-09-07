@@ -64,16 +64,15 @@ class EAttributeAddFeature extends AbstractAddFeature {
 	override add(IAddContext context) {
 		context.container.addContainerShape [
 			link = context.newObject
-			newRectangle[
+			addRectangle[
 				position = context.position
 				size = context.size(150, 20)
 				style = diagram.shapeStyle
-				newImage[ // attribute symbol
-					id = context.EAttribute.symbol
+				addImage(context.EAttribute.symbol) [ // attribute symbol
 					position = #[2, 2]
 					size = #[16, 16]
 				]
-				newText[ // attribute text
+				addText[ // attribute text
 					position = #[20, 0]
 					size = #[150, 20]
 					style = diagram.textStyle

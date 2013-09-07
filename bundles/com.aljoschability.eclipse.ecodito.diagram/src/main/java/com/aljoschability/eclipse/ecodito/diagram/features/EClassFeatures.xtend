@@ -53,31 +53,30 @@ class EClassAddFeature extends AbstractAddFeature {
 		context.container.addContainerShape [
 			link = context.newObject
 			addChopboxAnchor
-			newRoundedRectangle[
+			addRoundedRectangle[
 				position = context.position
 				size = context.size(200, 100)
 				style = diagram.getShapeStyle
 				radius = 6
-				newImage[ // class symbol
-					id = identifier
+				addImage(identifier) [ // class symbol
 					position = #[7, 7]
 					size = #[16, 16]
 				]
-				newText[ // class name
+				addText[ // class name
 					position = #[27, 5]
 					width = parentGraphicsAlgorithm.width - 54
 					height = 20
 					style = diagram.textStyle
 					value = context.EClass.name
 				]
-				newPolyline[ // name separator
-					newPoint(0, 29)
-					newPoint(parentGraphicsAlgorithm.width, 29)
+				addPolyline[ // name separator
+					addPoint(0, 29)
+					addPoint(parentGraphicsAlgorithm.width, 29)
 					style = diagram.getShapeStyle
 				]
-				newPolyline[ // attribute separator
-					newPoint(0, 39)
-					newPoint(parentGraphicsAlgorithm.width, 39)
+				addPolyline[ // attribute separator
+					addPoint(0, 39)
+					addPoint(parentGraphicsAlgorithm.width, 39)
 					style = diagram.getShapeStyle
 				]
 			]

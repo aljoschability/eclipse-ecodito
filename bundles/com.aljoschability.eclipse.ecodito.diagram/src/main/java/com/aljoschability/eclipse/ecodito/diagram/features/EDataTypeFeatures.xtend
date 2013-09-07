@@ -29,26 +29,25 @@ class EDataTypeAddFeature extends AbstractAddFeature {
 	override add(IAddContext context) {
 		context.container.addContainerShape [
 			link = context.newObject
-			val frame = newRoundedRectangle[
+			val frame = addRoundedRectangle[
 				position = context.position
 				size = context.size(200, 100)
 				style = getShapeStyle(diagram)
 				radius = 6
-				val titleSymbol = newImage[
+				val titleSymbol = addImage(icon) [
 					position = #[7, 7]
 					size = #[16, 16]
-					id = icon
 				]
-				val titleText = newText[
+				val titleText = addText[
 					position = #[27, 5]
 					width = parentGraphicsAlgorithm.width - 54
 					height = 20
 					style = getTextStyle(diagram)
 					value = context.EDataType.name
 				]
-				val titleSeparator = newPolyline[
-					newPoint(0, 29)
-					newPoint(parentGraphicsAlgorithm.width, 29)
+				val titleSeparator = addPolyline[
+					addPoint(0, 29)
+					addPoint(parentGraphicsAlgorithm.width, 29)
 					style = getShapeStyle(diagram)
 				]
 			]

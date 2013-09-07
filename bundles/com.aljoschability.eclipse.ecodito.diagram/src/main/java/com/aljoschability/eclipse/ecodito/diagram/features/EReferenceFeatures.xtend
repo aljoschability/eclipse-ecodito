@@ -61,7 +61,7 @@ class EReferenceAddFeature extends CoreAddConnectionFeature {
 			start = context.sourceAnchor
 			end = context.targetAnchor
 			link = context.newObject
-			newPolyline[
+			addPolyline[
 				style = diagram.connectionStyle
 			]
 		]

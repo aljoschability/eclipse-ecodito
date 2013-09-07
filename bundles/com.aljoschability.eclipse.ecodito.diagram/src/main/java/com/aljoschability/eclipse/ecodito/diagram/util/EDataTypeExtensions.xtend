@@ -33,7 +33,7 @@ class EDataTypeExtensions extends EClassifierExtensions {
 		var style = diagram.findStyle(identifier)
 
 		if (style == null) {
-			style = diagram.newStyle [
+			style = diagram.addStyle [
 				id = identifier
 				background = newGradient[
 					normal = #["f7f7f7", "fcfcfc"]
@@ -53,7 +53,7 @@ class EDataTypeExtensions extends EClassifierExtensions {
 		var style = diagram.findStyle(identifier + "/text")
 
 		if (style == null) {
-			style = diagram.newStyle [
+			style = diagram.addStyle [
 				id = identifier + "/text"
 				font = diagram.manageFont("Segoe UI", 10, false, true)
 				foreground = IColorConstant::BLACK
