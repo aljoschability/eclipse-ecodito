@@ -57,6 +57,7 @@ class EClassExtensions extends EClassifierExtensions {
 		if (style == null) {
 			style = diagram.addStyle [
 				id = identifier + "/text"
+				filled = false
 				font = diagram.manageFont("Segoe UI", 10, false, true)
 				foreground = IColorConstant::BLACK
 			]

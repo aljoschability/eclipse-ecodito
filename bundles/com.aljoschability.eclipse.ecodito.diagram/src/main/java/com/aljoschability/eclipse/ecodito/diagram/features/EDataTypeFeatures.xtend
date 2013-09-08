@@ -1,9 +1,9 @@
 package com.aljoschability.eclipse.ecodito.diagram.features;
 
 import com.aljoschability.eclipse.core.graphiti.features.CoreCreateFeature
+import com.aljoschability.eclipse.core.graphiti.services.AddService
 import com.aljoschability.eclipse.ecodito.diagram.util.EDataTypeExtensions
 import org.eclipse.emf.ecore.EcoreFactory
-import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.graphiti.features.IFeatureProvider
 import org.eclipse.graphiti.features.context.IAddContext
 import org.eclipse.graphiti.features.context.ICreateContext
@@ -16,7 +16,33 @@ import org.eclipse.graphiti.features.impl.AbstractLayoutFeature
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature
 import org.eclipse.graphiti.features.impl.Reason
 import org.eclipse.graphiti.mm.algorithms.Text
-import com.aljoschability.eclipse.core.graphiti.services.AddService
+
+class EDataTypeCreateFeature extends CoreCreateFeature {
+	extension EDataTypeExtensions = EDataTypeExtensions::INSTANCE
+
+	new(IFeatureProvider fp) {
+		super(fp)
+
+		name = "Data Type"
+		description = "Create Data Type"
+		imageId = identifier
+		largeImageId = identifier
+	}
+
+	override canCreate(ICreateContext context) {
+		return context.EPackage != null
+	}
+
+	override createElement(ICreateContext context) {
+		val element = EcoreFactory::eINSTANCE.createEDataType
+		element.name = context.EPackage.nextEClassifierName("DataType")
+		element.instanceClassName = "java.lang.Object"
+
+		context.EPackage.EClassifiers += element
+
+		return element
+	}
+}
 
 class EDataTypeAddFeature extends AbstractAddFeature {
 	extension AddService = AddService::INSTANCE
@@ -29,26 +55,37 @@ class EDataTypeAddFeature extends AbstractAddFeature {
 	override add(IAddContext context) {
 		context.container.addContainerShape [
 			link = context.newObject
-			val frame = addRoundedRectangle[
+			addRoundedRectangle [
 				position = context.position
 				size = context.size(200, 100)
-				style = getShapeStyle(diagram)
+				style = mainStyle
 				radius = 6
-				val titleSymbol = addImage(icon) [
+				// image
+				addImage(identifier) [
 					position = #[7, 7]
 					size = #[16, 16]
 				]
-				val titleText = addText[
+				// name
+				addText [
 					position = #[27, 5]
 					width = parentGraphicsAlgorithm.width - 54
 					height = 20
-					style = getTextStyle(diagram)
-					value = context.EDataType.name
+					style = nameStyle
+					value = context.EDataType.text
 				]
-				val titleSeparator = addPolyline[
-					addPoint(0, 29)
-					addPoint(parentGraphicsAlgorithm.width, 29)
-					style = getShapeStyle(diagram)
+				// type
+				addText [
+					position = #[27, 21]
+					width = parentGraphicsAlgorithm.width - 54
+					height = 20
+					style = typeStyle
+					value = context.EDataType.typeName
+				]
+				// name/type separator
+				addPolyline[
+					addPoint(0, 40)
+					addPoint(parentGraphicsAlgorithm.width, 40)
+					style = mainStyle
 				]
 			]
 		]
@@ -56,34 +93,6 @@ class EDataTypeAddFeature extends AbstractAddFeature {
 
 	override canAdd(IAddContext context) {
 		context.EPackage != null && context.EDataType != null
-	}
-}
-
-class EDataTypeCreateFeature extends CoreCreateFeature {
-	extension EDataTypeExtensions = EDataTypeExtensions::INSTANCE
-
-	new(IFeatureProvider fp) {
-		super(fp)
-
-		name = "Data Type"
-		description = "Create Data Type"
-		imageId = EcorePackage.Literals::EDATA_TYPE.name
-		largeImageId = EcorePackage.Literals::EDATA_TYPE.name
-
-		editable = false
-	}
-
-	override canCreate(ICreateContext context) {
-		return context.EPackage != null
-	}
-
-	override createElement(ICreateContext context) {
-		val element = EcoreFactory::eINSTANCE.createEDataType
-		element.name = context.EPackage.nextEClassifierName("DataType")
-
-		context.EPackage.EClassifiers += element
-
-		return element
 	}
 }
 

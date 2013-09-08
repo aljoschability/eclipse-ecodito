@@ -1,5 +1,6 @@
 package com.aljoschability.eclipse.ecodito.diagram.util
 
+import com.aljoschability.eclipse.core.graphiti.services.AddService
 import com.aljoschability.eclipse.core.graphiti.services.SetService
 import org.eclipse.emf.ecore.EDataType
 import org.eclipse.emf.ecore.EEnum
@@ -7,13 +8,12 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.graphiti.features.context.IAddContext
 import org.eclipse.graphiti.features.context.IDirectEditingContext
 import org.eclipse.graphiti.features.context.IPictogramElementContext
+import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm
 import org.eclipse.graphiti.mm.algorithms.Text
 import org.eclipse.graphiti.mm.algorithms.styles.Style
-import org.eclipse.graphiti.mm.pictograms.Diagram
 import org.eclipse.graphiti.services.Graphiti
 import org.eclipse.graphiti.services.IGaService
 import org.eclipse.graphiti.util.IColorConstant
-import com.aljoschability.eclipse.core.graphiti.services.AddService
 
 class EDataTypeExtensions extends EClassifierExtensions {
 	val static public INSTANCE = new EDataTypeExtensions
@@ -29,11 +29,18 @@ class EDataTypeExtensions extends EClassifierExtensions {
 		EcorePackage.Literals::EDATA_TYPE.name
 	}
 
-	def Style getShapeStyle(Diagram diagram) {
-		var style = diagram.findStyle(identifier)
+	def String getText(EDataType element) {
+		element.name
+	}
 
+	def String getTypeName(EDataType element) {
+		"«" + element.instanceClassName + "»"
+	}
+
+	def Style getMainStyle(GraphicsAlgorithm element) {
+		var style = element.diagram.findStyle(identifier)
 		if (style == null) {
-			style = diagram.addStyle [
+			style = element.diagram.addStyle [
 				id = identifier
 				background = newGradient[
 					normal = #["f7f7f7", "fcfcfc"]
@@ -49,13 +56,29 @@ class EDataTypeExtensions extends EClassifierExtensions {
 		return style
 	}
 
-	def Style getTextStyle(Diagram diagram) {
-		var style = diagram.findStyle(identifier + "/text")
+	def Style getNameStyle(GraphicsAlgorithm element) {
+		var style = element.diagram.findStyle(identifier + "/text")
 
 		if (style == null) {
-			style = diagram.addStyle [
+			style = element.diagram.addStyle [
 				id = identifier + "/text"
-				font = diagram.manageFont("Segoe UI", 10, false, true)
+				filled = false
+				font = element.diagram.manageFont("Segoe UI", 10, false, true)
+				foreground = IColorConstant::BLACK
+			]
+		}
+
+		return style
+	}
+
+	def Style getTypeStyle(GraphicsAlgorithm element) {
+		var style = element.diagram.findStyle(identifier + "/type")
+
+		if (style == null) {
+			style = element.diagram.addStyle [
+				id = identifier + "/type"
+				filled = false
+				font = element.diagram.manageFont("Consolas", 9, false, false)
 				foreground = IColorConstant::BLACK
 			]
 		}

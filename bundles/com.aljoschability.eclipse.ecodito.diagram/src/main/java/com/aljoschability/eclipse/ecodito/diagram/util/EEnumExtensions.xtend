@@ -53,6 +53,7 @@ class EEnumExtensions extends EClassifierExtensions {
 			style = diagram.addStyle [
 				id = identifier + "/text"
 				font = diagram.manageFont("Segoe UI", 10, false, true)
+				filled = false
 				foreground = IColorConstant::BLACK
 			]
 		}
